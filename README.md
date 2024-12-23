@@ -1,7 +1,55 @@
 # scMyeloids_ICH
 Characterizing the immune cell landscape in intracerebral hemorrhage stroke
 
+# Contents
 
+```
+├── Figures
+│   ├── Figure1
+│   │   ├── 1.Figure1B_CCAmetadata.ipynb
+│   │   ├── 1.Figure1C_UMAP.ipynb
+│   │   ├── 1.Figure1D_CT_Markers.ipynb
+│   │   ├── 1.Figure1E_CrumblR.ipynb
+│   │   └── 1.Figure1F_Dreamlet.ipynb
+│   ├── Figure2
+│   │   ├── 2.Figure2B_UMAP.ipynb
+│   │   ├── 2.Figure2C_CrumblR.ipynb
+│   │   ├── 2.Figure2D_CL_DEGs.ipynb
+│   │   ├── 2.Figure2E_scRDS.ipynb
+│   │   └── 2.Figure2F_IREA.R
+│   ├── Figure3
+│   │   ├── 3.Figure3_A.ipynb
+│   │   ├── 3.Figure3_B_Liana.ipynb
+│   │   └── 3.Figure3_C.ipynb
+│   ├── SFigure1
+│   │   └── SFigure1.R
+│   ├── SFigure2
+│   │   ├── SFigure2_A_Co_FreshMG_ICH.ipynb
+│   │   └── SFigure2_BCD.ipynb
+│   ├── SFigure3
+│   │   ├── SFigure_3A.ipynb
+│   │   ├── SFigure_3B.ipynb
+│   │   └── SFigure_3C.ipynb
+│   └── SFigure4
+│       └── SFigure4.R
+├── README.md
+├── Tables
+└── scripts
+    ├── 0.Functions.R
+    ├── 0.Preprocess.R
+    ├── 1.Merge_datasets.R
+    ├── 2.Pegasus_Functions.py
+    ├── 2.Pegasus_run.py
+    ├── 3.Manual_Major_Annotation.py
+    ├── 4.Transfer_MAnnot_To_Seurat.R
+    ├── 5.Ref_SCANVI_Annot.py
+    ├── 6.Metacells.R
+    ├── 7.DEG_Metacells.R
+    ├── 8.scDRS.ipynb
+    ├── 9.Liana.ipynb
+    └── utils.R
+```
+    
 
 # System requirements
 ```
