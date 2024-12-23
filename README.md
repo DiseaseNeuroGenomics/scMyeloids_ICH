@@ -1,8 +1,10 @@
 # scMyeloids_ICH
-Characterizing the immune cell landscape in ICH stroke
+Characterizing the immune cell landscape in intracerebral hemorrhage stroke
 
+
+
+# System requirements
 ```
----
 crumblr_0.99.6  
 metafor_4.2-0  
 numDeriv_2016.8-1.1  
@@ -62,6 +64,7 @@ Seurat_4.9.9.9049
 SeuratObject_4.9.9.9086  
 sp_2.0-0  
 dplyr_1.1.2  
-
----
 ```
+
+# License
+MIT License
