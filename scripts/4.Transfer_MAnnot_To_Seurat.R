@@ -125,7 +125,7 @@ Cortex$CellType[cluster_vec %in% c(1)] <- "MG-Inter."
 Cortex$CellType[cluster_vec %in% c(3)] <- "Monocytes"
 Cortex$CellType[cluster_vec %in% c(4)] <- "Proliferation"
 Cortex$CellType[cluster_vec %in% c(5)] <- "T Cells"
-Cortex$CellType[cluster_vec %in% c(6)] <- "Astroccytes"
+Cortex$CellType[cluster_vec %in% c(6)] <- "Astrocytes"
 Cortex$CellType[cluster_vec %in% c(7)] <- "Oligodendrocytes"
 Cortex$CellType[cluster_vec %in% c(8)] <- "Murel"
 Cortex$CellType[cluster_vec %in% c(9)] <- "B Cells"
@@ -133,7 +133,7 @@ Cortex$CellType[cluster_vec %in% c(10)] <- "exclude"
 
 # Simplify cell populations
 Cortex$CellPop <- Cortex$CellType
-Cortex$CellPop[Cortex$CellType %in% c("MG-Homeo.", "MG-Inter.", "MG-Active")] <- "Microglia"
+Cortex$CellPop[Cortex$CellType %in% c("MG-Homeo.", "MG-Inter.", "MG-Active")] <- "Myeloid"
 Cortex$CellPop[Cortex$class == "Monocytes"] <- "Monocytes"
 Cortex <- subset(Cortex, subset = CellType != 'exclude')
 
