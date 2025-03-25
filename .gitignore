@@ -1,0 +1,16 @@
+Figures/Figure1/.DS_Store
+Figures/Figure2/.DS_Store
+Figures/Figure3/.DS_Store
+Figures/SFigure1/.DS_Store
+Figures/SFigure2/.DS_Store
+Figures/SFigure3/.DS_Store
+Figures/.DS_Store
+*/.DS_Store
+Manuscript
+Manuscript/*
+Figures/Figure3/old_*
+Tables
+Tables/*
+remove_bg.py
+Paper_Figures/*/*.ai
+Paper_Figures/*/*.pdf
