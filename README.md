@@ -12,15 +12,15 @@ Characterizing the immune cell landscape in intracerebral hemorrhage stroke
 │   │   ├── 1.Figure1E_CrumblR.ipynb
 │   │   └── 1.Figure1F_Dreamlet.ipynb
 │   ├── Figure2
-│   │   ├── 2.Figure2B_UMAP.ipynb
-│   │   ├── 2.Figure2C_CrumblR.ipynb
-│   │   ├── 2.Figure2D_CL_DEGs.ipynb
-│   │   ├── 2.Figure2E_scRDS.ipynb
-│   │   └── 2.Figure2F_IREA.R
+│   │   ├── 2.Figure2_A_UMAP.ipynb
+│   │   ├── 2.Figure2_B_scRDS.ipynb
+│   │   ├── 2.Figure2_C_CrumblR.ipynb
+│   │   ├── 2.Figure2_D_CL_DEGs.ipynb
+│   │   └── 2.Figure2_E_GRN.R
 │   ├── Figure3
-│   │   ├── 3.Figure3_A.ipynb
-│   │   ├── 3.Figure3_B_Liana.ipynb
-│   │   └── 3.Figure3_C.ipynb
+│   │   ├── 3.Figure3_A_Liana.ipynb
+│   │   ├── 3.Figure3_B_CellChat.ipynb
+│   │   └── 3.Figure3_C_IREA.ipynb
 │   ├── SFigure1
 │   │   └── SFigure1.R
 │   ├── SFigure2
