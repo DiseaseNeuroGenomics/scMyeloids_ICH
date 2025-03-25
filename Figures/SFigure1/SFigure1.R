@@ -2,7 +2,7 @@ library(ggplot2)
 library(Seurat)
 library(cowplot)
 library(patchwork)
-mydata <- readRDS('2024_11_All_Immune.rds')
+mydata <- readRDS('/Users/dimitrioskyriakis/Documents/Projects/2025_ICH_Project/Data_backup/2.2024_11_Final_Immune.rds')
 
 Real_donor_ids <- sort(unique(mydata@meta.data$donor))
 Crypto_ids <- sprintf("Donor_%02d", 1:length(Real_donor_ids))
