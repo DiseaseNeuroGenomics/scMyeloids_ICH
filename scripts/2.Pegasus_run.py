@@ -147,7 +147,7 @@ data.obs['demux_type'].value_counts()
 pg.scatter(data, attrs='demux_type', basis='umap', dpi=150);plt.savefig(prefix+"Doublet_umap.png")
 
 
-if (remove_doublet):
+if (remove_doublet.lower() == 'true'):
     pass_run="Run2"
     file_exists = os.path.exists(prefix+pass_run+'_post-doublet.zarr.zip')
     if(file_exists):
