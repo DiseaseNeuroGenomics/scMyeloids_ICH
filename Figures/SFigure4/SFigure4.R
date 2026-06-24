@@ -1,213 +1,150 @@
-library(GEOquery)
+#!/usr/bin/env Rscript
+# Author: Dimitrios Kyriakis
+# Description: Supplementary Figure 4 — label transfer from mouse MCAO scRNA-seq
+#              (GSE189432) to ICH myeloid metacells via Seurat FindTransferAnchors.
+# Usage: Rscript SFigure4.R <external_data_dir> <metacells_rds> <output_dir>
+#   <external_data_dir>  Directory containing GSE189432 files and annotation CSV
+#   <metacells_rds>      Path to myeloid metacell RDS (.rds.ztsd)
+#   <output_dir>         Directory for output PDF/PNG
 
-library(Seurat)
-library(tibble)
-library(magrittr)
-library(dittoSeq)
-library(patchwork)
-library(harmony)
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) < 3) {
+    stop("Usage: Rscript SFigure4.R <external_data_dir> <metacells_rds> <output_dir>")
+}
 
-setwd('External_Data/')
-save_Fig_dir <- 'SFigures/SFigure4/'
+external_data_dir <- args[1]
+metacells_rds     <- args[2]
+output_dir        <- args[3]
 
+suppressPackageStartupMessages({
+    library(GEOquery)
+    library(Seurat)
+    library(tibble)
+    library(magrittr)
+    library(dittoSeq)
+    library(patchwork)
+    library(harmony)
+})
 
+source('scripts/utils.R')
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
-# Read in data
-Metadata <- read.csv(file ="GSE189432_annotations.csv.gz")
-Metadata <- Metadata[Metadata$sample %in% c('ctrl_cns','stroke_cns_24h_1','stroke_cns_24h_2','stroke_cns_72h'),]
-unique(Metadata$sample)
-dim(Metadata)
-
-
-# ============================== READ CONTROL ============================
-CTRL <- CreateSeuratObject(ReadMtx(
-  mtx = "ctrl_cns/GSM5701739_ctrl_cns_matrix.mtx.gz/",
-  features = "ctrl_cns/GSM5701739_ctrl_cns_features.tsv.gz",
-  cells = "ctrl_cns/GSM5701739_ctrl_cns_barcodes.tsv.gz"
-))
-CTRL$orig.ident <- 'ctrl_cns'
-my_vector <- rownames(CTRL@meta.data)
-# Replace all occurrences of "-1" with a specific string
-replacement_string <- "_ctrl_cns"
-my_vector <- gsub("-1", replacement_string, my_vector)
-CTRL <- RenameCells(CTRL, new.names =my_vector )
-# -----------------------------------------------------------------------
-
-
-
-# ============================== READ S24_1 ============================
-S24_1 <- CreateSeuratObject(ReadMtx(
-  mtx = "stroke_24_cns/GSM5701742_stroke_cns_24h_1_matrix.mtx.gz",
-  features = "stroke_24_cns/GSM5701742_stroke_cns_24h_1_features.tsv.gz",
-  cells = "stroke_24_cns/GSM5701742_stroke_cns_24h_1_barcodes.tsv.gz",
-))
-S24_1$orig.ident <- 'stroke_cns_24h_1'
-my_vector <- rownames(S24_1@meta.data)
-# Replace all occurrences of "-1" with a specific string
-replacement_string <- "_stroke_cns_24h_1"
-my_vector <- gsub("-1", replacement_string, my_vector)
-S24_1 <- RenameCells(S24_1, new.names =my_vector )
-# -----------------------------------------------------------------------
-
-
-# ============================== READ S24_2 ============================
-S24_2 <- CreateSeuratObject(ReadMtx(
-  mtx = "stroke_24_cns_2/GSM5701743_stroke_cns_24h_2_matrix.mtx.gz",
-  features = "stroke_24_cns_2/GSM5701743_stroke_cns_24h_2_features.tsv.gz",
-  cells = "stroke_24_cns_2/GSM5701743_stroke_cns_24h_2_barcodes.tsv.gz"
-))
-S24_2$orig.ident <- 'stroke_cns_24h_2'
-my_vector <- rownames(S24_2@meta.data)
-# Replace all occurrences of "-1" with a specific string
-replacement_string <- "_stroke_cns_24h_2"
-my_vector <- gsub("-1", replacement_string, my_vector)
-S24_2 <- RenameCells(S24_2, new.names =my_vector )
-# -----------------------------------------------------------------------
-
-
-# ============================== READ S72h ============================
-S72 <- CreateSeuratObject(ReadMtx(
-  mtx = "stroke_72_cns/GSM5701746_stroke_cns_72h_matrix.mtx.gz",
-  features = "stroke_72_cns/GSM5701746_stroke_cns_72h_features.tsv.gz",
-  cells = "stroke_72_cns/GSM5701746_stroke_cns_72h_barcodes.tsv.gz"
-))
-S72$orig.ident <- 'stroke_cns_72h'
-my_vector <- rownames(S72@meta.data)
-# Replace all occurrences of "-1" with a specific string
-replacement_string <- "_stroke_cns_72h"
-my_vector <- gsub("-1", replacement_string, my_vector)
-S72 <- RenameCells(S72, new.names =my_vector )
-# -----------------------------------------------------------------------
-
-
-
-table(Metadata$sample)
-
-#add.cell.ids = c("ctrl_cns", "stroke_cns_24h_1","stroke_cns_24h_2","stroke_cns_72h"),
-#MICE <- merge(x = CTRL,y = c(S24_1,S24_2,S72,PIA,DURA,stroke_dura,stroke_pia), project = "Mice")
-MICE <- merge(x = CTRL,y = c(S24_1,S24_2,S72), project = "Mice")
-
-head(Metadata)
-head(MICE@meta.data)
-MICE$barcode <- rownames(MICE@meta.data)
-MICE <- subset(MICE,subset= barcode %in% Metadata$barcode)
-MICE$UMAP_1 <- Metadata$UMAP_1
-MICE$UMAP_2 <- Metadata$UMAP_2
-MICE$cluster <- Metadata$cluster
-MICE$sample <- Metadata$sample
-MICE[["RNA"]] <- JoinLayers(MICE[["RNA"]])
-counts <- MICE@assays$RNA$counts
-rownames(counts) <- toupper(rownames(MICE))
-metadata <- MICE@meta.data
-
-
-
-MICE <- CreateSeuratObject(counts =counts,meta.data = metadata )
-umap <- Metadata[,c('UMAP_1','UMAP_2')]
-rownames(umap) <- Metadata$barcode
-MICE[["ref.umap"]] <- CreateDimReducObject(embeddings = as.matrix(umap), key = "UMAP_", assay = DefaultAssay(MICE))
-all.genes <- rownames(MICE)
-# MICE <- ScaleData(MICE, features = all.genes)
-
-ifnb <- MICE
-# ifnb[["RNA"]] <- split(ifnb[["RNA"]], f = ifnb$sample)
-ifnb[["RNA"]] <- JoinLayers(ifnb[["RNA"]])
-
-ifnb <- SCTransform(ifnb)
-ifnb <- RunPCA(ifnb)
-set.seed(120120224)
 set.seed(24022012)
 
-ifnb <- RunHarmony(ifnb, group.by.vars = "sample",dims.use = 1:40)
-ifnb <- RunUMAP(ifnb, dims = 1:40, reduction = "harmony", min.dist = 0.3,seed.use =24022012 ,
-                reduction.name = "umap.harmony", reduction.key = "Uh_", return.model = T)
+# ===================== Load GSE189432 annotation =====================
+Metadata <- read.csv(file.path(external_data_dir, "GSE189432_annotations.csv.gz"))
+Metadata <- Metadata[Metadata$sample %in% c('ctrl_cns','stroke_cns_24h_1','stroke_cns_24h_2','stroke_cns_72h'), ]
 
-ifnb
-DimPlot(ifnb,group.by = 'cluster',reduction = 'umap.harmony',label = T,pt.size = 0.0001)
+# ===================== Read 10X data =====================
+read_sample <- function(name, mtx, feat, bar, suffix) {
+    obj <- CreateSeuratObject(ReadMtx(
+        mtx      = file.path(external_data_dir, mtx),
+        features = file.path(external_data_dir, feat),
+        cells    = file.path(external_data_dir, bar)
+    ))
+    obj$orig.ident <- name
+    new_barcodes   <- gsub("-1", suffix, rownames(obj@meta.data))
+    RenameCells(obj, new.names = new_barcodes)
+}
 
-sort(unique(ifnb$cluster))
-colors_paper <-c(
-  "#FFC312",
-  "#C4E538",
-  "#12CBC4",
-  "#FDA7DF",
-  "#ED4C67",
-  "#F79F1F",
-  "#A3CB38",
-  "#1289A7",
-  "#D980FA",
-  "#B53471",
-  "#EE5A24",
-  "#009432",
-  "#0652DD",
-  "#9980FA",
-  "#833471",
-  "#EA2027",
-  "#006266",
-  "#1B1464",
-  "#5758BB",
-  "#6F1E51",
-  "#40407A"
+CTRL  <- read_sample('ctrl_cns',
+    'ctrl_cns/GSM5701739_ctrl_cns_matrix.mtx.gz',
+    'ctrl_cns/GSM5701739_ctrl_cns_features.tsv.gz',
+    'ctrl_cns/GSM5701739_ctrl_cns_barcodes.tsv.gz',
+    '_ctrl_cns')
+S24_1 <- read_sample('stroke_cns_24h_1',
+    'stroke_24_cns/GSM5701742_stroke_cns_24h_1_matrix.mtx.gz',
+    'stroke_24_cns/GSM5701742_stroke_cns_24h_1_features.tsv.gz',
+    'stroke_24_cns/GSM5701742_stroke_cns_24h_1_barcodes.tsv.gz',
+    '_stroke_cns_24h_1')
+S24_2 <- read_sample('stroke_cns_24h_2',
+    'stroke_24_cns_2/GSM5701743_stroke_cns_24h_2_matrix.mtx.gz',
+    'stroke_24_cns_2/GSM5701743_stroke_cns_24h_2_features.tsv.gz',
+    'stroke_24_cns_2/GSM5701743_stroke_cns_24h_2_barcodes.tsv.gz',
+    '_stroke_cns_24h_2')
+S72   <- read_sample('stroke_cns_72h',
+    'stroke_72_cns/GSM5701746_stroke_cns_72h_matrix.mtx.gz',
+    'stroke_72_cns/GSM5701746_stroke_cns_72h_features.tsv.gz',
+    'stroke_72_cns/GSM5701746_stroke_cns_72h_barcodes.tsv.gz',
+    '_stroke_cns_72h')
+
+MICE <- merge(x = CTRL, y = c(S24_1, S24_2, S72), project = "Mice")
+MICE$barcode <- rownames(MICE@meta.data)
+MICE <- subset(MICE, subset = barcode %in% Metadata$barcode)
+MICE$UMAP_1   <- Metadata$UMAP_1
+MICE$UMAP_2   <- Metadata$UMAP_2
+MICE$cluster  <- Metadata$cluster
+MICE$sample   <- Metadata$sample
+MICE[["RNA"]] <- JoinLayers(MICE[["RNA"]])
+
+# Uppercase gene names to match human convention
+counts <- MICE@assays$RNA$counts
+rownames(counts) <- toupper(rownames(MICE))
+MICE   <- CreateSeuratObject(counts = counts, meta.data = MICE@meta.data)
+
+umap_coords <- Metadata[, c('UMAP_1','UMAP_2')]
+rownames(umap_coords) <- Metadata$barcode
+MICE[["ref.umap"]] <- CreateDimReducObject(
+    embeddings = as.matrix(umap_coords),
+    key = "UMAP_", assay = DefaultAssay(MICE)
 )
-names(colors_paper) <- c("Micro_1",
-                         "Micro_2","Micro_3",
-                         "stress_Micro","CAM_1","CAM_2",
-                         "SAMC","Macro_1","Macro_2","stress_Myeloid","mDC1",'mDC2',
-                         'Granulo_1','Granulo_2',
-                         'Mast','prolif_cells',
-                         'Bc','gdTc','ILC2','Tc','NK')
-DimPlot(ifnb,group.by = 'cluster',reduction = 'umap.harmony',pt.size = 0.0001,cols=colors_paper)
-dittoBarPlot(ifnb,group.by = 'sample',var = 'cluster',color.panel =colors_paper  )
 
+# ===================== SCTransform + Harmony =====================
+ifnb <- MICE
+ifnb[["RNA"]] <- JoinLayers(ifnb[["RNA"]])
+ifnb <- SCTransform(ifnb)
+ifnb <- RunPCA(ifnb)
+ifnb <- RunHarmony(ifnb, group.by.vars = "sample", dims.use = 1:40)
+ifnb <- RunUMAP(ifnb, dims = 1:40, reduction = "harmony", min.dist = 0.3,
+                seed.use = 24022012, reduction.name = "umap.harmony",
+                reduction.key = "Uh_", return.model = TRUE)
 
-# saveCRDS(ifnb, 'MCAO_brain_parenchymal.rds.ztsd')
+colors_paper <- c(
+    "Micro_1"="#FFC312","Micro_2"="#C4E538","Micro_3"="#12CBC4",
+    "stress_Micro"="#FDA7DF","CAM_1"="#ED4C67","CAM_2"="#F79F1F",
+    "SAMC"="#A3CB38","Macro_1"="#1289A7","Macro_2"="#D980FA",
+    "stress_Myeloid"="#B53471","mDC1"="#EE5A24","mDC2"="#009432",
+    "Granulo_1"="#0652DD","Granulo_2"="#9980FA","Mast"="#833471",
+    "prolif_cells"="#EA2027","Bc"="#006266","gdTc"="#1B1464",
+    "ILC2"="#5758BB","Tc"="#6F1E51","NK"="#40407A"
+)
 
-source('utils.R')
-setwd('External_Data/')
-Metacells <- readCRDS('2024_03_28_Myeloid_Metacells_Subclass_ADAM.rds.ztsd')
+# ===================== Label transfer to metacells =====================
+Metacells <- readCRDS(metacells_rds)
 Idents(Metacells) <- 'Clusters'
 
-
 anchors <- FindTransferAnchors(
-  reference = ifnb,
-  query = Metacells,
-  normalization.method = "SCT",
-  reference.reduction = "pca",
-  dims = 1:40
+    reference           = ifnb,
+    query               = Metacells,
+    normalization.method = "SCT",
+    reference.reduction = "pca",
+    dims                = 1:40
 )
 
+Metacells <- MapQuery(
+    anchorset          = anchors,
+    query              = Metacells,
+    reference          = ifnb,
+    refdata            = list(celltype = "cluster"),
+    reference.reduction = "harmony",
+    reduction.model    = "umap.harmony"
+)
 
-Metacells <- MapQuery(anchorset = anchors,
-                      query = Metacells,
-                      reference = ifnb,
-                      refdata = list(celltype = "cluster"),
-                      reference.reduction = "harmony",
-                      reduction.model = "umap.harmony")
+# ===================== Plots =====================
+p1 <- DimPlot(ifnb, group.by = 'cluster', reduction = 'umap.harmony',
+              pt.size = 0.0001, cols = colors_paper, label = FALSE) +
+    xlim(-15, 10) + ylim(-15, 10) + ggtitle('Reference')
+p2 <- DimPlot(Metacells, reduction = "umap", group.by = "predicted.celltype",
+              cols = colors_paper) + NoLegend()
+p3 <- dittoBarPlot(Metacells, group.by = 'Clusters', var = 'predicted.celltype',
+                   color.panel = colors_paper) + coord_flip() + NoLegend()
 
-Metacells
-DimPlot(Metacells, reduction = "ref.umap", group.by = "Clusters")
-DimPlot(Metacells, reduction = "ref.umap", group.by = "predicted.celltype")+
-  DimPlot(ifnb,group.by = 'cluster',reduction = 'umap.harmony',label = T)
-
-DimPlot(Metacells, reduction = "umap", group.by = "predicted.celltype",cols = colors_paper)
-
-
-
-DimPlot(Metacells, reduction = "umap", group.by = "predicted.celltype",cols = colors_paper)+
-  dittoBarPlot(Metacells,group.by = 'Clusters',var = 'predicted.celltype',color.panel = colors_paper)+coord_flip()+
-  plot_layout(widths=c(6,3))
-
-p1 <- DimPlot(ifnb,group.by = 'cluster',reduction = 'umap.harmony',label.box = F,pt.size = 0.0001,cols=colors_paper,label=F)+xlim(-15,10)+ylim(-15,10)+ggtitle('Reference')
-p2 <- DimPlot(Metacells, reduction = "umap", group.by = "predicted.celltype",cols = colors_paper)+NoLegend()
-
-
-pdf(paste0(save_Fig_dir,'SupFig.4.pdf'),width = 18,height=6)
-p1 + p2 + dittoBarPlot(Metacells,group.by = 'Clusters',var = 'predicted.celltype',color.panel = colors_paper)+coord_flip()+NoLegend()+
-plot_layout(widths=c(6,6,3),guides = 'collect')
+pdf(file.path(output_dir, "SupFig.4.pdf"), width = 18, height = 6)
+print(p1 + p2 + p3 + plot_layout(widths = c(6, 6, 3), guides = 'collect'))
 dev.off()
 
-graphics.off()
-png(paste0(save_Fig_dir,'SupFig.4.png'),width = 18,height=6)
-p1 + p2 + dittoBarPlot(Metacells,group.by = 'Clusters',var = 'predicted.celltype',color.panel = colors_paper)+coord_flip()+NoLegend()+
-plot_layout(widths=c(6,6,3),guides = 'collect')
+png(file.path(output_dir, "SupFig.4.png"), width = 1800, height = 600, res = 100)
+print(p1 + p2 + p3 + plot_layout(widths = c(6, 6, 3), guides = 'collect'))
 dev.off()
+
+message("Saved outputs to: ", output_dir)

@@ -1,3 +1,4 @@
+# Author: Dimitrios Kyriakis
 
 
 
@@ -91,7 +92,6 @@ outliers_mad<- function(x,b = 1.4826,threshold = 3,na.rm = TRUE){
 
 
 
-
 read_10x_fun <- function(h5_file){
     # ===================== READ DATA ======================
     DEM <- as.data.frame(Seurat::Read10X_h5(h5_file))
@@ -117,7 +117,7 @@ mit_frac_calc <- function(DEM,workdir){
 # --------------------------------------------------------------------------------------
 
 
- 
+
 # ================================  Scrublet ==============================================
 scrublet_run <- function(DEM,sample,workdir,min.molecules.per.gene=100){
     # Careful the number of cores you use. Maybe an error in cl
@@ -156,14 +156,13 @@ remove_mt_rb_genes <- function(DEM,sample,workdir){
 
 
 
-
 # ============================= PREPARE SEURAT OBJECT ===================================
 prepare_seura_object <- function(DEM,sample,percent.mt,percent.ribo,scrublet_doublet_info,workdir){
     seur <- CreateSeuratObject(counts = DEM, project = sample, min.cells = 10, min.features = 200)
     percent.mt_remain <- percent.mt[names(percent.mt) %in%names(seur$nCount_RNA)]
     percent.ribo_remain <- percent.ribo[names(percent.ribo) %in%names(seur$nCount_RNA)]
     seur$percent.mt <- percent.mt_remain
-    seur$percent.ribo <- percent.ribo_remain 
+    seur$percent.ribo <- percent.ribo_remain
 
     # ====================== ADD INFO ========================
     seur$auto_scrub_is_doublet <- scrublet_doublet_info$is_doublet

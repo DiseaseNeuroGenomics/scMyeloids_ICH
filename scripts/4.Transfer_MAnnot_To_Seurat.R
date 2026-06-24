@@ -1,3 +1,4 @@
+# Author: Dimitrios Kyriakis
 # Set a random seed for reproducibility
 set.seed(12345)
 
@@ -25,7 +26,7 @@ library(patchwork)
 theme_to_add <- theme_bw() + theme(text = element_text(size = 20))
 
 # Source utility functions
-source('utils.R')
+source('scripts/utils.R')
 
 # ===================== READ ARGUMENTS =========================
 # Assign command-line arguments to specific variables
@@ -86,8 +87,8 @@ Cortex$Act.Score <- as.vector(pg_meta["Micro/Myeloid Shared Act. Score"][,1])
 Cortex$Mic.Ident <- as.vector(pg_meta["Microglial Identity Score"][,1])
 
 # Save UMAP plots to PDF
-pdf("1.Cortex_UMAP.pdf")
-DimPlot(Cortex, reduction = "umap", group.by = c("race")) 
+pdf(file.path(dirname(rds_output), "1.Cortex_UMAP.pdf"))
+DimPlot(Cortex, reduction = "umap", group.by = c("race"))
 DimPlot(Cortex, reduction = "umap", group.by = c("sex"))
 DimPlot(Cortex, reduction = "umap", group.by = c("donor"))
 DimPlot(Cortex, reduction = "umap", group.by = c("class"), label = TRUE)
@@ -137,41 +138,6 @@ Cortex$CellPop[Cortex$CellType %in% c("MG-Homeo.", "MG-Inter.", "MG-Active")] <-
 Cortex$CellPop[Cortex$class == "Monocytes"] <- "Monocytes"
 Cortex <- subset(Cortex, subset = CellType != 'exclude')
 
-# Save cell cycle gene plots
-s.genes <- cc.genes$s.genes
-g2m.genes <- cc.genes$g2m.genes
-pdf("Cell_Cycle_Genes.pdf", width = 12)
-FeaturePlot(Cortex, features = c(s.genes, g2m.genes), order = TRUE, raster = TRUE)
-VlnPlot(Cortex, features = c(s.genes, g2m.genes), sort = TRUE, flip = TRUE, stack = TRUE)
-dev.off()
-
-# Save activation score scatter plots
-pdf("1.Activation_Score_IN_cortex.pdf", width = 12)
-FeatureScatter(Cortex, "Act.Score_Allcells", "identity_score", shape.by = "class", group.by = "class", raster = TRUE, pt.size = 0.3) +
-  xlab("Activation score") + ylab("Microglial identity score") +
-  geom_hline(yintercept = -0.15, linetype = 'dashed', col = 'black', size = 0.7) +
-  geom_vline(xintercept = 0.25, linetype = 'dashed', col = 'black', size = 0.7) +
-  theme_bw() + theme(text = element_text(size = 20))
-FeatureScatter(Cortex, "Act.Score_Allcells", "identity_score", shape.by = "CellType", group.by = "CellType", raster = TRUE, pt.size = 0.3) +
-  xlab("Activation score") + ylab("Microglial identity score") +
-  geom_hline(yintercept = -0.15, linetype = 'dashed', col = 'black', size = 0.7) +
-  geom_vline(xintercept = 0.25, linetype = 'dashed', col = 'black', size = 0.7) +
-  theme_bw() + theme(text = element_text(size = 20))
-dev.off()
-
-# Save combined scatter and feature plots
-pdf("2.Scatter_Activation_Score_IN_cortex.pdf", width = 13, height = 10)
-p1 <- DimPlot(Cortex, group.by = "CellType", reduction = "umap", label = TRUE) + theme_to_add
-p3 <- FeaturePlot(Cortex, reduction = "umap", features = c("Act.Score_Allcells"), order = TRUE) + theme_to_add + ggtitle("Activation score")
-p4 <- FeaturePlot(Cortex, reduction = "umap", features = c("identity_score"), order = TRUE) + theme_to_add + ggtitle("Microglial identity score")
-p2 <- FeatureScatter(Cortex, "Act.Score_Allcells", "identity_score", group.by = "CellType", raster = TRUE) +
-  xlab("Activation score") + ylab("Microglial identity score") +
-  geom_hline(yintercept = -0.15, linetype = 'dashed', col = 'black', size = 0.7) +
-  geom_vline(xintercept = 0.25, linetype = 'dashed', col = 'black', size = 0.7) +
-  theme_bw() + theme(text = element_text(size = 20))
-p1 + p2 + p3 + p4 + plot_layout(ncol = 2, guides = "collect")
-dev.off()
-
 # Save Cortex object and metadata
 saveCRDS(Cortex, rds_output)
 write_tsv(as.data.frame(Cortex@meta.data), output_metadata)
@@ -179,4 +145,3 @@ write_tsv(as.data.frame(Cortex@meta.data), output_metadata)
 # Convert Cortex object to SingleCellExperiment and save
 sce_r <- as.SingleCellExperiment(Cortex)
 saveCRDS(sce_r, sce_rds_output)
-# ----------------------------------------------------------------------

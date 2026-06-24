@@ -1,8 +1,9 @@
+# Author: Dimitrios Kyriakis
 import random
 random.seed(123456)
 import os
 import sys
-import pegasus as pg; 
+import pegasus as pg;
 import scanpy as sc;
 from scipy import stats;
 import numpy as np;
@@ -11,15 +12,6 @@ import pandas as pd
 import matplotlib.pyplot as plt;
 import seaborn as sns;
 
-
-# data
-prefix='ICH_Stroke/result/3.Annotation/'
-from PegasusFunctions import *
-run_doublet = False
-os.chdir('ICH_Stroke/')
-print(os.getcwd())
-
-
 # ======================== READ DATA ==========================
 print(sys.argv[1:])
 input_file = sys.argv[1]
@@ -27,16 +19,17 @@ activation_score_genes = sys.argv[2]
 output_zip = sys.argv[3]
 output_metadata = sys.argv[4]
 output_h5ad = sys.argv[5]
+prefix = sys.argv[6] if len(sys.argv) > 6 else 'result/3.Annotation/'
 
+os.makedirs(prefix, exist_ok=True)
 
 data = pg.read_input(input_file)
 
 # =================================== Auto Annotation =================================
-# =================================== Auto Annotation =================================
 pg.de_analysis(data, cluster='leiden_labels');marker_dict = pg.markers(data);pg.write_results_to_excel(marker_dict,prefix+'df_leiden.xlsx')
 
 # Annotate based on  markers
-celltype_dict = pg.infer_cell_types(data, markers = 'ICH_project/Data/human_brain_immune_cell_markers.json')
+celltype_dict = pg.infer_cell_types(data, markers = 'human_brain_immune_cell_markers.json')
 cluster_names = pg.infer_cluster_names(celltype_dict)
 pg.annotate(data, name='anno_dh', based_on='leiden_labels', anno_dict=cluster_names)
 
@@ -44,10 +37,7 @@ pg.scatter(data, attrs=['donor','leiden_labels','anno_dh'], basis='umap', legend
 plt.savefig(prefix+"Test.png")
 pg.dendrogram(data, rep='pca_regressed_harmony', groupby='leiden_labels', panel_size=(5,5), dpi=100)
 plt.savefig(prefix+"Dendrogram.png")
-# ------------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------------
 
-# ============================ Manual Annotation =================================
 # ============================ Manual Annotation =================================
 cluster_names = [
 "Microglia",# 1
@@ -69,25 +59,15 @@ cluster_names = [
 "Mural",# 16
 "Memory B cells"]# 17
 
-# "Microglia",# 10
-# "Microglia",# 13
-
-# "Microglia",# 20
-# "Microglia"]# 21
-
 pg.annotate(data, name='class', based_on='leiden_labels', anno_dict=cluster_names)
 pg.scatter(data, attrs=['leiden_labels','class','anno_dh'], basis='umap', legend_loc='on data', dpi=150, wspace=0.1)
 plt.savefig(prefix+"Annotations.png")
 pg.dendrogram(data, rep='pca_regressed_harmony', groupby='class', panel_size=(5,5), dpi=100)
 plt.savefig(prefix+"Dendrogram_Class.png")
-# # ------------------------------------------------------------------------------------
-# # ------------------------------------------------------------------------------------
-
 
 
 # # ======================================= Activation Score =============================================================
-# # ======================================= Activation Score =============================================================
-df = pd.read_csv( activation_score_genes,header=0,usecols=["Module", "GeneSynbol"])
+df = pd.read_csv(activation_score_genes, header=0, usecols=["Module", "GeneSynbol"])
 df = df.dropna()
 adata=data.to_anndata()
 ASCORE = {}
@@ -102,16 +82,12 @@ for i in np.unique(df.Module):
 sc.pl.matrixplot(adata, ASCORE, 'leiden_labels', dendrogram=True, cmap='Blues', standard_scale='var', colorbar_title='column scaled\nexpression')
 plt.savefig(prefix+"Enzymatic_Heat_subclass.jpg")
 pg.calc_signature_score(data, ASCORE)
-# # ------------------------------------------------------------------------------------
-# # ------------------------------------------------------------------------------------
 
 adata=data.to_anndata()
 sc.pl.scatter(adata,x="Micro/Myeloid Shared Act. Score",y="Microglial Identity Score", legend_loc='on data',color="leiden_labels")
 plt.savefig(prefix+"Scatter_activation_vs_identity.jpg")
 
 
-
-# # ======================================= PLOTS =============================================================
 # # ======================================= PLOTS =============================================================
 marker_genes_dict={'Ast': ['CAMK2G','CKB'],
     'Pro-inflammatory': ['HSPB1','FOSB','JUN','PLK2'],
@@ -131,39 +107,11 @@ plt.savefig(prefix+"All_Heat_subclass.jpg")
 sc.pl.matrixplot(adata, marker_genes_dict, 'class', dendrogram=True, cmap='Blues', standard_scale='var', colorbar_title='column scaled\nexpression')
 plt.savefig(prefix+"All_Heat_class.jpg")
 
-
 pg.compo_plot(data, 'mRS','class', panel_size=(4, 1))
 plt.savefig(prefix+"mRS_class.jpg")
-
-
-marker_genes_dict={'Ast': ['GJA1'],
-    'Microglia': ["P2RY12"],
-    'Olig': ["PLP1"],
-    #'Endo': ["LY6C1"],
-    'T-cell': ['CD3D'],
-    'B-cell': ['CD79A'],
-    'Cell-cycle': ['STMN1'],
-    'Chemokine': ['CCL3','CCL4','IL1B'],
-    'Mono': ['VIM'],
-    'Mural': ['TPM1']}
-    'Pro-inflammatory': ['JUN'],
-    'Cell-cycle': ['STMN1'],
-    'Chemokine': ['CCL3','CCL4','IL1B']}
-
-
-plt.figure(figsize=(15, 6))
-adata=data.to_anndata()
-adata = adata[adata.obs['class'].isin(['Astrocytes', 'Monocytes', 'Oligodendrocytes', 'T Cells','Memory B cells'])]
-sc.tl.dendrogram(adata,groupby="class")
-ax = sc.pl.tracksplot(adata, marker_genes_dict, groupby='class', dendrogram=False,figsize =(15,6))
-plt.savefig(prefix+"Bars_expression.jpg")
-
-# # ------------------------------------------------------------------------------------
-# # ------------------------------------------------------------------------------------
 
 df = pd.DataFrame(data.obs)
 df.to_csv(output_metadata,sep='\t')
 
-
-pg.write_output(data,output_h5ad,file_type="h5ad")
-pg.write_output(data,output_zip)
+pg.write_output(data, output_h5ad, file_type="h5ad")
+pg.write_output(data, output_zip)

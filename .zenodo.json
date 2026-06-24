@@ -1,0 +1,99 @@
+{
+  "title": "Code for: Decoding Immune Landscapes and Therapeutic Targets in Intracerebral Hemorrhage",
+  "upload_type": "software",
+  "version": "1.0.0",
+  "description": "Analysis code for the paper 'Decoding Immune Landscapes and Therapeutic Targets in Intracerebral Hemorrhage'. Scripts reproduce all main and supplementary figures. See the GitHub repository for full documentation and system requirements.",
+  "keywords": [
+    "intracerebral hemorrhage",
+    "single-cell RNA-seq",
+    "myeloid cells",
+    "neuroinflammation",
+    "cell-cell interaction",
+    "gene regulatory network",
+    "drug repurposing",
+    "transcription factors"
+  ],
+  "license": "MIT",
+  "access_right": "embargoed",
+  "embargo_date": "2026-12-31",
+  "creators": [
+    {
+      "name": "Kyriakis, Dimitrios",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "DataManager"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Roussos, Panagiotis",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ContactPerson"
+    },
+    {
+      "name": "Wang, Xinyi",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Pavlopoulos, Angelos",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Vicari, James",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Kleopoulos, Steve P.",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Shao, Zhiping",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Fullard, John F.",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Lee, Donghoon",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Georgakopoulos, Anastasios",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Carvalho Poyraz, Fernanda",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Voloudakis, Georgios",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Skupin, Alex",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Kellner, Christopher P.",
+      "type": "ProjectMember"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DiseaseNeuroGenomics/scMyeloids_ICH",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/KyriakisDimitrios/scMyeloids_ICH",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+# Author: Dimitrios Kyriakis
 # Set options and seed for reproducibility
 options(future.globals.maxSize = 1000000 * 1024^2)  # Increase memory limit for large data processing
 set.seed(12345)  # Set random seed for reproducibility
@@ -39,10 +40,6 @@ library(gtools)
 library(patchwork)
 # ----------------------------------------------
 
-# Define working directory and create it if it doesn't exist
-workdir <- "ICH_Stroke/result/Cortex/1.Merge/"
-dir.create(workdir, recursive = TRUE)
-
 # List of Seurat objects to merge
 seurat_list <- rds_files_path
 print(seurat_list)
@@ -70,6 +67,5 @@ Cortex <- merge(
 saveRDS(Cortex, rds_output)
 
 # Save the merged object in H5Seurat format and convert to AnnData (h5ad) format
-setwd(workdir)
-SaveH5Seurat(Cortex, filename = "Merged_Cortex.h5Seurat", overwrite = TRUE)
-Convert("Merged_Cortex.h5Seurat", dest = "h5ad")
+SaveH5Seurat(Cortex, filename = file.path(dirname(rds_output), "Merged_Cortex.h5Seurat"), overwrite = TRUE)
+Convert(file.path(dirname(rds_output), "Merged_Cortex.h5Seurat"), dest = "h5ad")

@@ -1,26 +1,20 @@
-
+# Author: Dimitrios Kyriakis
 args = commandArgs(trailingOnly=TRUE)
 print(args)
 options(future.globals.maxSize = 100000000 * 1024^2)
-# set random seed for reproducibility
 set.seed(123456789)
 print(args)
 
 # ========================= Libraries ===================================
-# Basic data manipulation and analysis
 library(dplyr)
 library(tidyr)
 library(tidyverse)
 library(readr)
-
-# Single-cell analysis
 library(Seurat)
 library(SingleCellExperiment)
 library(scater)
 library(scuttle)
 library(Seurat)
-
-# Co-expression network analysis
 library(igraph)
 library(harmony)
 library(WGCNA)
@@ -28,8 +22,6 @@ library(hdWGCNA)
 library(clusterProfiler)
 library(SCopeLoomR)
 library(dreamlet)
-
-# Plotting libraries
 library(ggplot2)
 library(viridis)
 library(cowplot)
@@ -39,14 +31,12 @@ library(ComplexHeatmap)
 library(ggtree)
 library(aplot)
 library(circlize)
-
-# Meta-analysis and statistical packages
 library(org.Hs.eg.db)
 library(muscat)
 library(broom)
 library(metafor)
-# Custom functions and setup
-'%notin%' <- Negate('%in%')  # Define '%notin%' to negate '%in%' operator
+
+'%notin%' <- Negate('%in%')
 
 # ========================= Input arguments ===================================
 input_rds <- args[1]                # Input RDS file
@@ -56,21 +46,15 @@ n_of_aggregated <- as.numeric(args[4]) # Number of aggregated data points
 n_of_aggregated_text <- args[4]         # Text version for output
 threads <- as.numeric(args[5])      # Number of threads for parallel processing
 output_pdf <- args[6]               # Output PDF filename
+output_tsv <- args[7]               # Output TSV for DEG table
 
 # ========================= Working Directory ===================================
-workdir <- "7.WGCNA/"  # Directory for results
-source('utils.R')      # Load custom functions
-dir.create(workdir)    # Create working directory if it doesn't exist
-
-# This script processes and analyzes metacell clustering data for myeloid subclass differentiation.
-# It uses specific clustering labels to categorize cells into groups for differential expression analysis.
-# The analysis includes defining clusters, calculating fold-changes, and generating key metrics such as
-# log2 fold-change, standard error, and t-statistics to identify differentially expressed genes (DEGs).
-# The final output is a table of DEGs between the selected clusters, which is saved as a TSV file
-# for further biological interpretation and publication.
+workdir <- dirname(input_rds)
+source('scripts/utils.R')
+dir.create(workdir, recursive = TRUE, showWarnings = FALSE)
 
 # Load the metacell data from a compressed RDS file
-Metacells <- readCRDS(paste0(workdir, 'Myeloid_Metacells_Subclass_ADAM.rds.ztsd'))
+Metacells <- readCRDS(input_rds)
 
 # Create a new cluster grouping with three major categories based on original clusters
 Metacells$ThreeClusters <- as.vector(Metacells$Clusters)
@@ -146,4 +130,5 @@ clean_DEGs$gene <- rownames(clean_DEGs)
 clean_DEGs <- clean_DEGs %>% arrange(desc(clean_DEGs$log2FC))
 
 # Save the final table of DEGs to a TSV file
-readr::write_tsv(clean_DEGs, 'result/Tables/3.DEGs_MTC_456_vs_123_FULL_nonsig_incl_tstat.tsv')
+readr::write_tsv(clean_DEGs, output_tsv)
+message("Saved DEG table to: ", output_tsv)

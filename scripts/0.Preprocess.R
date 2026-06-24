@@ -1,3 +1,4 @@
+# Author: Dimitrios Kyriakis
 # Set a seed for reproducibility of results
 set.seed(1234)
 
@@ -22,7 +23,7 @@ library(parallel)       # For parallel computation
 `%notin%` <- Negate(`%in%`)
 
 # Source external functions for preprocessing
-source("scripts/0.Preprocess/0.Functions.R")
+source("scripts/0.Functions.R")
 
 # Assign command-line arguments to variables for further use
 h5_file <- args[1]                 # Path to the HDF5 file containing gene expression data
@@ -31,10 +32,10 @@ origin_workdir <- args[3]          # Path to the working directory
 sample <- args[4]                  # Sample name
 min.molecules.per.gene <- as.integer(args[5])  # Minimum number of molecules required per gene
 min.cells <- 10                    # Minimum number of cells required for filtering
-remove_mitochondrial <- as.logical(args[6])    # Whether to remove mitochondrial genes
-remove_ribosomal <- as.logical(args[7])        # Whether to remove ribosomal genes
-remove_mitocard <- as.logical(args[8])         # Whether to remove mitochondrial CARD genes
-remove_noncoding <- as.logical(args[9])        # Whether to remove noncoding genes
+remove_mitochondrial <- args[6]    # Whether to remove mitochondrial genes
+remove_ribosomal <- args[7]        # Whether to remove ribosomal genes
+remove_mitocard <- args[8]         # Whether to remove mitochondrial CARD genes
+remove_noncoding <- args[9]        # Whether to remove noncoding genes
 rdsoutout <- args[10]              # Output path for the RDS file
 reported_MAD_fig <- args[11]       # Path for the output MAD figure
 reported_scrublet_fig <- args[12]  # Path for the output Scrublet figure
@@ -76,19 +77,12 @@ if (file.exists(rdsoutout)) {
     # Extract raw RNA counts from the Seurat object
     DEM <- seur@assays$RNA@counts
 
-
-
-
-
-
     # =================================== GENES =====================================================
-    # =================================== GENES =====================================================
-    # =================================== GENES =====================================================        
     # Identify mitochondrial and ribosomal genes in the dataset using regex
     mt_pos <- grep("^Mt-|^RPL|^RPS", rownames(DEM), ignore.case = TRUE)
 
     # Load the MitoCarta gene list, which contains mitochondrial genes
-    mitocard_file <- readr::read_tsv("ICH_project/Data/Gene_lists/Human.MitoCarta3.0.txt")
+    mitocard_file <- readr::read_tsv(args[14])  # Pass MitoCarta file as argument
     mitocard <- unlist(
         lapply(as.vector(mitocard_file$Genes), function(x) {
             as.list(strsplit(x, ", ")[[1]])
@@ -96,10 +90,7 @@ if (file.exists(rdsoutout)) {
     ) %>% na.omit()  # Flatten and remove NA values
 
     # Load coding and non-coding gene information
-    coding_genes <- readr::read_tsv(
-        "ICH_project/Data/Gene_lists/gencode.v38.annotation.gene_id.gene_name.gene_type.tsv",
-        col_names = FALSE
-    )
+    coding_genes <- readr::read_tsv(args[15], col_names = FALSE)  # Pass gencode file as argument
     non_coding_genes <- coding_genes$X2[coding_genes$X3 != "protein_coding"]  # Extract non-coding genes
 
     # Calculate the percentage of mitochondrial and ribosomal genes for each cell
@@ -155,12 +146,6 @@ if (file.exists(rdsoutout)) {
     # Print the dimensions of the filtered gene expression matrix
     print(dim(DEM_pass_genes))
 
-    # -------------------------------------------------------------------------------------
-    # -------------------------------------------------------------------------------------
-    # -------------------------------------------------------------------------------------
-    
-    # ============================ CELLS ==============================================
-    # ============================ CELLS ==============================================
     # ============================ CELLS ==============================================
     # Create a new Seurat object using the filtered gene expression matrix
     seur <- CreateSeuratObject(
@@ -227,19 +212,9 @@ if (file.exists(rdsoutout)) {
     # Print the total number of cells removed
     length(cells_to_remove)
 
-    # -------------------------------------------------------------------------------------
-    # -------------------------------------------------------------------------------------
-    # -------------------------------------------------------------------------------------
-    
-    # =================================== scrublet =====================================================
-    # =================================== scrublet =====================================================
     # =================================== scrublet =====================================================
     scrublet_doublet_info <- GetScrubletScores(mat=as.matrix(DEM_pass_mad),sample_name=sample,min.molecules.per.gene=min.molecules.per.gene , method="scrublet",workdir=workdir)
-    # -------------------------------------------------------------------------------------
-    # -------------------------------------------------------------------------------------
-    
-    # =================================== CreateSeuratObject =====================================================
-    # =================================== CreateSeuratObject =====================================================
+
     # =================================== CreateSeuratObject =====================================================
     # Add scrublet doublet information to the metadata
     metadata$is_doublet <- scrublet_doublet_info$is_doublet  # Flag indicating whether a cell is a doublet
@@ -289,7 +264,6 @@ if (file.exists(rdsoutout)) {
     seur <- ScaleData(seur, verbose = FALSE)
 
     # ====== Cell Cycle Scoring ======
-    # Define S phase and G2M phase gene sets for cell cycle analysis
     s.genes <- cc.genes$s.genes
     g2m.genes <- cc.genes$g2m.genes
 
@@ -344,10 +318,6 @@ if (file.exists(rdsoutout)) {
     dev.off()  # Close the PDF device
 
 
-
-
-    # ============================== TRANSFER METADATA =================================================
-    # ============================== TRANSFER METADATA =================================================
     # ============================== TRANSFER METADATA =================================================
     seur$donor <- seur$orig.ident
     seur$race <- medical_metadata$race[match(seur$donor,medical_metadata$donor)]
@@ -387,8 +357,5 @@ if (file.exists(rdsoutout)) {
     seur$sex <- as.factor(seur$sex)
     seur$race <- as.factor(seur$race)
 
-    # p <- DotPlot(seur,features=c("XIST","TSIX","UTY","DDX3Y"))
-    # ggsave(plot=p,filename=reported_SEX_fig)
     saveRDS(seur,rdsoutout)
 }
-

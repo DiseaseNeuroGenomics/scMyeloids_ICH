@@ -1,3 +1,4 @@
+# Author: Dimitrios Kyriakis
 import numpy as np
 import pegasus as pg; import scanpy as sc;from scipy import stats;
 import numpy as np;import pandas as pd
@@ -30,8 +31,7 @@ def calc_MG_subtype_scores(pg_data):
 
 
 
-def pass_run_fun(pg_data,pass_run):
-    prefix='result/Cortex/2.Pegasus_run/'
+def pass_run_fun(pg_data, pass_run, prefix='result/Cortex/2.Pegasus_run/'):
     adata=pg_data.to_anndata()
     # find highly variable genes
     sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5, batch_key='donor')
@@ -51,10 +51,9 @@ def pass_run_fun(pg_data,pass_run):
     pg.pca(pg_data, n_components=15)
     pg.regress_out(pg_data, attrs=['nCount_RNA','percent.mt','CC_diff'])
     pg.run_harmony(pg_data, batch='donor', rep='pca_regressed', max_iter_harmony=20)
-    # plt.savefig(prefix+"_haarmony_converged.jpg")
     print("Calculate neighbors")
-    pg.neighbors(pg_data, rep='pca_regressed_harmony', use_cache=False)#, dist='cosine')
-    pg.umap(pg_data, rep='pca_regressed_harmony') # rep='pca_regressed_harmony'
+    pg.neighbors(pg_data, rep='pca_regressed_harmony', use_cache=False)
+    pg.umap(pg_data, rep='pca_regressed_harmony')
     ### clustering
     pg.leiden(pg_data, rep='pca_regressed_harmony', resolution=1.5)
     return(pg_data)
