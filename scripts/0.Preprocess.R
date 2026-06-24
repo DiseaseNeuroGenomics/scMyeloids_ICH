@@ -31,10 +31,10 @@ origin_workdir <- args[3]          # Path to the working directory
 sample <- args[4]                  # Sample name
 min.molecules.per.gene <- as.integer(args[5])  # Minimum number of molecules required per gene
 min.cells <- 10                    # Minimum number of cells required for filtering
-remove_mitochondrial <- args[6]    # Whether to remove mitochondrial genes
-remove_ribosomal <- args[7]        # Whether to remove ribosomal genes
-remove_mitocard <- args[8]         # Whether to remove mitochondrial CARD genes
-remove_noncoding <- args[9]        # Whether to remove noncoding genes
+remove_mitochondrial <- as.logical(args[6])    # Whether to remove mitochondrial genes
+remove_ribosomal <- as.logical(args[7])        # Whether to remove ribosomal genes
+remove_mitocard <- as.logical(args[8])         # Whether to remove mitochondrial CARD genes
+remove_noncoding <- as.logical(args[9])        # Whether to remove noncoding genes
 rdsoutout <- args[10]              # Output path for the RDS file
 reported_MAD_fig <- args[11]       # Path for the output MAD figure
 reported_scrublet_fig <- args[12]  # Path for the output Scrublet figure
