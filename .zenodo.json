@@ -1,8 +1,8 @@
 {
-  "title": "Code for: Decoding Immune Landscapes and Therapeutic Targets in Intracerebral Hemorrhage",
+  "title": "Code for: Single-cell profiling of living human brain identifies myeloid states associated with six-month functional outcome after intracerebral hemorrhage",
   "upload_type": "software",
   "version": "1.0.0",
-  "description": "Analysis code for the paper 'Decoding Immune Landscapes and Therapeutic Targets in Intracerebral Hemorrhage'. Scripts reproduce all main and supplementary figures. See the GitHub repository for full documentation and system requirements.",
+  "description": "Analysis code for the forthcoming Nature Medicine paper 'Single-cell profiling of living human brain identifies myeloid states associated with six-month functional outcome after intracerebral hemorrhage'. Scripts reproduce all main and supplementary figures. See the GitHub repository for full documentation and system requirements.",
   "keywords": [
     "intracerebral hemorrhage",
     "single-cell RNA-seq",
@@ -25,17 +25,13 @@
   ],
   "contributors": [
     {
-      "name": "Roussos, Panagiotis",
-      "affiliation": "Icahn School of Medicine at Mount Sinai",
-      "type": "ContactPerson"
+      "name": "Pavlopoulos, Angelos",
+      "affiliation": "National and Kapodistrian University of Athens",
+      "type": "ProjectMember"
     },
     {
       "name": "Wang, Xinyi",
       "affiliation": "Icahn School of Medicine at Mount Sinai",
-      "type": "ProjectMember"
-    },
-    {
-      "name": "Pavlopoulos, Angelos",
       "type": "ProjectMember"
     },
     {
@@ -44,7 +40,21 @@
       "type": "ProjectMember"
     },
     {
+      "name": "Pandey, Rukmani",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "Researcher"
+    },
+    {
+      "name": "Seo, Joon Ho",
+      "type": "Researcher"
+    },
+    {
       "name": "Kleopoulos, Steve P.",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Argyriou, Stathis",
       "affiliation": "Icahn School of Medicine at Mount Sinai",
       "type": "ProjectMember"
     },
@@ -54,12 +64,12 @@
       "type": "ProjectMember"
     },
     {
-      "name": "Fullard, John F.",
+      "name": "Hoffman, Gabriel",
       "affiliation": "Icahn School of Medicine at Mount Sinai",
       "type": "ProjectMember"
     },
     {
-      "name": "Lee, Donghoon",
+      "name": "Fullard, John F.",
       "affiliation": "Icahn School of Medicine at Mount Sinai",
       "type": "ProjectMember"
     },
@@ -68,20 +78,28 @@
       "type": "ProjectMember"
     },
     {
-      "name": "Carvalho Poyraz, Fernanda",
-      "type": "ProjectMember"
-    },
-    {
       "name": "Voloudakis, Georgios",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
       "type": "ProjectMember"
     },
     {
       "name": "Skupin, Alex",
+      "affiliation": "University of Luxembourg",
+      "type": "ProjectMember"
+    },
+    {
+      "name": "Lee, Donghoon",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
       "type": "ProjectMember"
     },
     {
       "name": "Kellner, Christopher P.",
       "type": "ProjectMember"
+    },
+    {
+      "name": "Roussos, Panagiotis",
+      "affiliation": "Icahn School of Medicine at Mount Sinai",
+      "type": "ContactPerson"
     }
   ],
   "related_identifiers": [
