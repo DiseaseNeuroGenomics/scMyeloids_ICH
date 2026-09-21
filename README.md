@@ -1,6 +1,6 @@
 # Single-cell profiling of living human brain identifies myeloid states associated with six-month functional outcome after intracerebral hemorrhage
 
-Analysis code, figures and supplementary tables for the manuscript submitted to **Nature Medicine**.
+Analysis code, figures and supplementary tables.
 
 ![Study overview: CD45+ cells were isolated from brain biopsies of 30 patients with acute intracerebral hemorrhage and profiled by single-cell RNA-seq. Six-month outcome was scored on the modified Rankin Scale and dichotomised into favorable (mRS 0-3) and unfavorable (mRS 4-6). The analysis arm comprises reference-based annotation, metacell aggregation, differential expression, gene regulatory network inference, cell-cell interaction analysis and computational drug repurposing, with prioritised compounds tested in a mouse ICH model.](Overview.jpeg)
 
@@ -94,30 +94,30 @@ Run from `code/`. Scripts source `00_setup.R`, which defines `DERIVED_DIR`, `TAB
 
 ### Which script makes which panel
 
-| Panel | Script |
-|---|---|
-| Fig. 1b | `figures/Figure1/Figure1_B_CCA_heatmap.R` |
-| Fig. 1c | `figures/Figure1/Figure1_C_umap.R` |
-| Fig. 1d | `figures/Figure1/Figure1_D_mRS_effect_forest.R` |
-| Fig. 1e | `figures/Figure1/Figure1_E_deg_summary_bar.R` |
-| Fig. 1f | `figures/Figure1/Figure1_F_myeloid_enrichment.R` |
-| Fig. 2a | `figures/Figure2/Figure2_A_umap_metacells.R` |
-| Fig. 2b | `figures/Figure2/2.Figure2_B_scRDS.ipynb` |
-| Fig. 2c | `figures/Figure2/Figure2_C_mRS_effect_tree.R` |
-| Fig. 2d | `figures/Figure2/Figure2_D_heatmap_top_genes.R` |
+| Panel | Script                                                  |
+|---|---------------------------------------------------------|
+| Fig. 1b | `figures/Figure1/Figure1_B_CCA_heatmap.R`               |
+| Fig. 1c | `figures/Figure1/Figure1_C_umap.R`                      |
+| Fig. 1d | `figures/Figure1/Figure1_D_mRS_effect_forest.R`         |
+| Fig. 1e | `figures/Figure1/Figure1_E_deg_summary_bar.R`           |
+| Fig. 1f | `figures/Figure1/Figure1_F_myeloid_enrichment.R`        |
+| Fig. 2a | `figures/Figure2/Figure2_A_umap_metacells.R`            |
+| Fig. 2b | `figures/Figure2/2.Figure2_B_scRDS.ipynb`               |
+| Fig. 2c | `figures/Figure2/Figure2_C_mRS_effect_tree.R`           |
+| Fig. 2d | `figures/Figure2/Figure2_D_heatmap_top_genes.R`         |
 | Fig. 2e | `figures/Figure2/Figure2_E_compareCluster_enrichment.R` |
-| Fig. 2f | `figures/Figure2/Figure2_F_SAMC_composition_bar.R` |
-| Fig. 2g | `figures/Figure2/Figure2_G_FINAL_dotplot.R` |
-| Fig. 3a | `figures/Figure3/Figure3_A_irea_cytokine_plot.R` |
-| Fig. 3b | `figures/Figure3/figure3b.py` |
-| Fig. 3c | `figures/Figure3/figure3c.R` |
-| Fig. 4b | `figures/Figure2/Figure2_H_hallmark_gsea_mTORC1.R` |
-| Fig. 4c,d,e | `figures/Figure4/Figure4_Final_corrected_nums.R` |
-| Extended Data Fig. 1 | `figures/Supplementary/SFigure1_donor_annotations.R` |
-| Extended Data Fig. 2c,d,e,f | `figures/Supplementary/SFigure2_myeloid_subtypes.R` (batch wrapper: `SFigure2_myeloid_subtypes.lsf`). The same script writes Supplementary Table 6 and both source-data files |
-| Extended Data Fig. 3b | `figures/Figure2/2.Figure2_B_scRDS.ipynb` |
-| Extended Data Fig. 4 | `figures/Figure2/Figure2_G_02_network_degree.R` |
-| Extended Data Fig. 5 | `figures/Figure4/Figure4_Final_corrected_nums.R` |
+| Fig. 2f | `figures/Figure2/Figure2_F_SAMC_composition_bar.R`      |
+| Fig. 2g | `figures/Figure2/Figure2_G_FINAL_dotplot.R`             |
+| Fig. 3a | `figures/Figure3/Figure3_A_irea_cytokine_plot.R`        |
+| Fig. 3b | `figures/Figure3/figure3b.py`                           |
+| Fig. 3c | `figures/Figure3/figure3c.R`                            |
+| Fig. 4b | `figures/Figure2/Figure2_H_hallmark_gsea_mTORC1.R`      |
+| Fig. 4c,d,e | `figures/Figure4/Figure4_Final_corrected_nums.R`        |
+| Extended Data Fig. 1 | `figures/Supplementary/SFigure1_donor_annotations.R`    |
+| Extended Data Fig. 2c,d,e,f | `figures/Supplementary/SFigure2.R`     |
+| Extended Data Fig. 3b | `figures/Figure2/2.Figure2_B_scRDS.ipynb`               |
+| Extended Data Fig. 4 | `figures/Figure2/Figure2_G_02_network_degree.R`         |
+| Extended Data Fig. 5 | `figures/Figure4/Figure4_Final_corrected_nums.R`        |
 
 Image segmentation, morphological feature extraction and morphotype classification live in the separate repository [koniplus/microglia-zone-morphology](https://github.com/koniplus/microglia-zone-morphology).
 
