@@ -181,8 +181,6 @@ Each script prints `sessionInfo()` on exit; the version block is written to the 
 The single-cell dataset, clinical metadata and analysis outputs are available through
 <https://cellxgene.cziscience.com/collections/d3c3e028-f91c-481e-9560-922fe94da67b>
 
-See [`data/README.md`](data/README.md) for what is hosted where.
-
 ## Ethics approval
 
 The human component of this study was approved by the Institutional Review Board of the Icahn School of Medicine at Mount Sinai (protocol number STUDY-18-01012A). Written informed consent was obtained from participants or their legally authorized representatives. All animal experiments were conducted according to institutional guidelines and were approved by the Institutional Animal Care and Use Committee of the Icahn School of Medicine at Mount Sinai (IACUC-2014-0271).
