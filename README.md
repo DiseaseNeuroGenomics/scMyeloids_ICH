@@ -1,229 +1,215 @@
 # Single-cell profiling of living human brain identifies myeloid states associated with six-month functional outcome after intracerebral hemorrhage
 
-![Project overview](Overview.jpeg)
+Analysis code, figures and supplementary tables for the manuscript submitted to **Nature Medicine**.
 
-This repository contains the analysis code, final figures, supplementary
-figures, and result tables for the forthcoming manuscript:
+![Study overview: CD45+ cells were isolated from brain biopsies of 30 patients with acute intracerebral hemorrhage and profiled by single-cell RNA-seq. Six-month outcome was scored on the modified Rankin Scale and dichotomised into favorable (mRS 0-3) and unfavorable (mRS 4-6). The analysis arm comprises reference-based annotation, metacell aggregation, differential expression, gene regulatory network inference, cell-cell interaction analysis and computational drug repurposing, with prioritised compounds tested in a mouse ICH model.](Overview.jpeg)
 
-> Kyriakis D, Pavlopoulos A, Wang X, Vicari J, Pandey R, Seo JH, Kleopoulos SP,
-> Argyriou S, Shao Z, Hoffman G, Fullard JF, Georgakopoulos A, Voloudakis G,
-> Skupin A, Lee D, Kellner CP, Roussos P. *Single-cell profiling of living human
-> brain identifies myeloid states associated with six-month functional outcome
-> after intracerebral hemorrhage.* **Nature Medicine.** Forthcoming.
+<p align="center"><em>Study design and analysis workflow (manuscript Fig. 1a).</em></p>
 
-## Code authorship
+---
 
-**All analysis, quality-control, and figure-generation scripts in this
-repository were authored by Dimitrios Kyriakis.** Server-specific paths and
-account details have been replaced with public configuration placeholders; the
-analysis logic is otherwise preserved.
+## Authors
 
-Corresponding author: Panos Roussos
-([panagiotis.roussos@mssm.edu](mailto:panagiotis.roussos@mssm.edu))
+Dimitrios Kyriakis <sup>1,2,3,4,5 †</sup>,
+Angelos Pavlopoulos <sup>6 †</sup>,
+Xinyi Wang <sup>1,2,3,4 †</sup>,
+Sarah Murphy <sup>1,2,3,4</sup>,
+James M. Vicari <sup>1,2,3,4</sup>,
+Rukmani Pandey <sup>7</sup>,
+Gabriel E. Hoffman <sup>1,2,3,4,9</sup>,
+Steve P. Kleopoulos <sup>1,2,3,4</sup>,
+Stathis Argyriou <sup>1,2,3,4</sup>,
+Zhiping Shao <sup>1,2,3,4</sup>,
+Joon Ho Seo <sup>2,3</sup>,
+Alexander Skupin <sup>5</sup>,
+Nikolaos K. Robakis <sup>3,8</sup>,
+Georgios Voloudakis <sup>1,2,3,4</sup>,
+Anastasios Georgakopoulos <sup>3</sup>,
+John F. Fullard <sup>1,2,3,4</sup>,
+Donghoon Lee <sup>1,2,3,4</sup>,
+Christopher P. Kellner,
+Panos Roussos <sup>1,2,3,4,9</sup>
 
-## Study summary
+<sup>†</sup> These authors contributed equally to this work.
 
-Intracerebral hemorrhage (ICH) is the most fatal form of stroke, and secondary
-injury driven by the immune response remains an important unmet therapeutic
-challenge. We analyzed single-cell RNA-sequencing data from myeloid cells of 30
-patients with acute ICH to identify immune states, signaling programs, and
-candidate interventions associated with six-month functional outcome.
+**Corresponding authors**
+Panos Roussos, <panagiotis.roussos@mssm.edu>
+Dimitrios Kyriakis, <dimitrios.kyriakis@mssm.edu>
 
-The analysis identified distinct myeloid trajectory clusters associated with
-favorable and unfavorable outcomes. Unfavorable outcome states showed lipid
-metabolism and neuroinflammatory programs, including PPARγ- and SPP1-associated
-signals, whereas protective states showed complement-related activity.
-Cell-cell interaction analyses highlighted outcome-associated signaling such as
-SPP1→ITGA4/ITGB1 and APOE→TREM2/SORL1. Transcription-factor and regulatory-network
-analyses resolved candidate drivers of myeloid polarization. Computational drug
-repurposing prioritized mTOR inhibition, with Everolimus and all-trans retinoic
-acid (RA) taken forward for experimental validation.
+### Affiliations
 
-The final result tables also report enrichment of MYC-target and mTORC1 Hallmark
-programs, significant treatment-associated changes in selected rotarod recovery
-measures, and treatment-by-distance effects on post-ICH myeloid morphology.
+1. Friedman Brain Institute, Icahn School of Medicine at Mount Sinai, New York, NY, USA
+2. Center for Disease Neurogenomics, Icahn School of Medicine at Mount Sinai, New York, NY, USA
+3. Department of Psychiatry, Icahn School of Medicine at Mount Sinai
+4. Department of Genetics and Genomic Sciences
+5. Luxembourg Center for Systems Biomedicine (LCSB), University of Luxembourg, Esch-sur-Alzette, Luxembourg
+6. Department of Pharmacology, Medical School of Athens, National and Kapodistrian University of Athens, Athens, Greece
+7. Institute for Translational Medicine and Pharmacology, Icahn School of Medicine at Mount Sinai, New York, NY 10029, USA
+8. Department of Neuroscience, Icahn School of Medicine at Mount Sinai
+9. Mental Illness Research, Education and Clinical Centers, James J. Peters VA Medical Center, Bronx, New York
 
-## Interactive data browser
+---
 
-Single-cell data with UMAP embeddings, cell-type annotations, and per-cell
-metadata are available through the
-[CELLxGENE browser](https://cellxgene.cziscience.com/e/a34a4892-8ec2-4330-9198-81fc31d034e5.cxg/).
+## Abstract
 
-## Repository contents
+Intracerebral hemorrhage (ICH) causes high mortality and disability, but the human immune programs associated with recovery remain poorly defined. We profiled 93,378 CD45-positive cells from surgical brain biopsies obtained from 30 patients with acute ICH and examined cellular states to six-month functional outcome. Myeloid cells showed the largest outcome-associated transcriptional differences. Favorable outcome was associated with CX3CR1-rich surveillance and complement-related programs, whereas unfavorable outcome was associated with an SPP1-rich lipid-scavenging state with differential SPI1, PPARγ, and mTORC1-related activity. SPP1–integrin/CD44 signaling converged with findings from an independent human ICH cohort, and the outcome-associated myeloid axis mapped to stroke-associated programs in mice. Transcriptome-guided drug repurposing prioritized mTOR inhibition and retinoid signaling. In exploratory mouse studies, everolimus- and all-trans retinoic acid-treated groups showed better rotarod performance and altered spatial distributions of IBA1-positive myeloid morphologies. These findings define acute human myeloid states linked to recovery and nominate pathways for further preclinical evaluation.
 
-```text
+---
+
+## Repository structure
+
+```
 .
-├── scripts/
-│   ├── main/                    # Primary preprocessing and analysis pipeline
-│   ├── figures/
-│   │   ├── Figure1/             # Cohort, composition, DE, and enrichment
-│   │   ├── Figure2/             # Metacells, scDRS, GRN, and pathway analyses
-│   │   ├── Figure3/             # IREA, LIANA, and CellChat analyses
-│   │   ├── Figure4/             # In vivo behavioral and morphology statistics
-│   │   ├── Supplementary/       # Supplementary-figure analyses
-│   │   └── qc/                  # Cross-checks and pipeline-status utilities
-│   ├── 00_setup.R               # Shared figure-analysis configuration
-│   ├── 00_helpers_stats.R       # Shared statistical helpers
-│   ├── 00_theme_colors.R        # Shared plotting palette
-│   └── build_supplementary_tables.R
-├── Figures/                     # Final main figures 1–4 (PDF and PNG)
-├── SFigures/                    # Final supplementary figures 1–5 (PDF and PNG)
-├── Tables/                      # Twenty publication result tables (CSV)
-├── Overview.jpeg                # Graphical study overview
-├── .zenodo.json                 # Code-deposit metadata
-└── README.md
+├── code/                          analysis source, mirrors the working tree
+│   ├── 00_setup.R                 paths, constants, shared libraries
+│   ├── 00_helpers_stats.R         statistical helper functions
+│   ├── 00_theme_colors.R          ggplot theme and palettes
+│   ├── build_supplementary_tables.R
+│   ├── main/                      preprocessing and core pipeline
+│   └── figures/
+│       ├── Figure1/  Figure2/  Figure3/  Figure4/
+│       ├── Supplementary/         Extended Data figures
+│       └── qc/                    cross-check scripts
+├── figures/                       final panels, PNG and PDF
+│   ├── Figure_1..4
+│   └── extended_data/Extended_Data_Figure_1..5
+├── supplementary_tables/          Supplementary Tables 1-20, CSV
+└── data/                          pointers to hosted data, see data/README.md
 ```
 
-The `NewFiles/` directory is an untracked local staging bundle and is not part
-of the publication repository.
+## Pipeline order
 
-## Analysis scripts
+Run from `code/`. Scripts source `00_setup.R`, which defines `DERIVED_DIR`, `TABLE_DIR` and `FIG_DIR`.
 
-### Primary pipeline
-
-| Script | Purpose |
+| Stage | Scripts |
 |---|---|
-| `scripts/main/0.Functions.R` | QC helper functions, including doublet detection |
-| `scripts/main/0.Preprocess.R` | Per-sample QC, filtering, normalization, and doublet removal |
-| `scripts/main/1.Merge_datasets.R` | Merge sample-level Seurat objects and export integrated formats |
-| `scripts/main/2.Pegasus_Functions.py` | Pegasus QC and annotation helper functions |
-| `scripts/main/2.Pegasus_run.py` | Pegasus clustering and dimensional reduction |
-| `scripts/main/3.Manual_Major_Annotation.py` | Major immune-cell annotation |
-| `scripts/main/4.Transfer_MAnnot_To_Seurat.R` | Transfer annotations back to Seurat |
-| `scripts/main/5.Ref_SCANVI_Annot.py` | Reference-based scVI/scANVI myeloid annotation |
-| `scripts/main/6.Metacells.R` | Metacell construction and Harmony integration |
-| `scripts/main/8.scDRS.py` | Single-cell disease-relevance scoring with scDRS |
-| `scripts/main/9.scDRS_supplementary_table.py` | Assemble scDRS supplementary results |
-| `scripts/main/9.Liana.py` | LIANA cell-cell interaction inference |
-| `scripts/main/scenic_GRN_ExtendedGenes.lsf.sh` | HPC workflow for extended-gene pySCENIC analysis |
-| `scripts/main/extract_loom_regulons.py` | Export regulon matrices from pySCENIC loom files |
+| Preprocessing and QC | `main/0.Preprocess.R`, `main/1.Merge_datasets.R`, `main/2.Pegasus_run.py` |
+| Cell-type annotation | `main/3.Manual_Major_Annotation.py`, `main/4.Transfer_MAnnot_To_Seurat.R`, `main/5.Ref_SCANVI_Annot.py` |
+| Metacell construction | `main/6.Metacells.R` |
+| Disease relevance (scDRS) | `main/8.scDRS.py`, `main/9.scDRS_supplementary_table.py`, `figures/Supplementary/2026_scDRS.py` |
+| Gene regulatory networks | `main/scenic_GRN_ExtendedGenes.lsf.sh`, `main/extract_loom_regulons.py`, `figures/Figure2/Figure2_G_*` |
+| Cell-cell communication | `main/9.Liana.py`, `figures/Figure3/*` |
+| Drug repurposing | see [voloudakislab/antagonist](https://github.com/voloudakislab/antagonist) |
+| Mouse behaviour and morphology | `figures/Figure4/Figure4_Final_corrected_nums.R` |
 
-### Figure and quality-control code
+### Which script makes which panel
 
-- `scripts/figures/Figure1/` contains the pseudobulk, CCA, UMAP,
-  outcome-effect, differential-expression, enrichment, and panel-assembly code
-  for Figure 1.
-- `scripts/figures/Figure2/` contains the metacell, scDRS, outcome-effect,
-  differential-expression, enrichment, predicted-composition, regulon,
-  network-centrality, validation, sensitivity, and mTORC1 code for Figure 2.
-- `scripts/figures/Figure3/` contains the IREA, LIANA, and CellChat figure code.
-- `scripts/figures/Figure4/` contains the final behavioral and morphology
-  statistical analysis for the in vivo validation.
-- `scripts/figures/Supplementary/` and `scripts/figures/qc/` contain the
-  supplementary analyses and manuscript cross-checks.
+| Panel | Script |
+|---|---|
+| Fig. 1b | `figures/Figure1/Figure1_B_CCA_heatmap.R` |
+| Fig. 1c | `figures/Figure1/Figure1_C_umap.R` |
+| Fig. 1d | `figures/Figure1/Figure1_D_mRS_effect_forest.R` |
+| Fig. 1e | `figures/Figure1/Figure1_E_deg_summary_bar.R` |
+| Fig. 1f | `figures/Figure1/Figure1_F_myeloid_enrichment.R` |
+| Fig. 2a | `figures/Figure2/Figure2_A_umap_metacells.R` |
+| Fig. 2b | `figures/Figure2/2.Figure2_B_scRDS.ipynb` |
+| Fig. 2c | `figures/Figure2/Figure2_C_mRS_effect_tree.R` |
+| Fig. 2d | `figures/Figure2/Figure2_D_heatmap_top_genes.R` |
+| Fig. 2e | `figures/Figure2/Figure2_E_compareCluster_enrichment.R` |
+| Fig. 2f | `figures/Figure2/Figure2_F_SAMC_composition_bar.R` |
+| Fig. 2g | `figures/Figure2/Figure2_G_FINAL_dotplot.R` |
+| Fig. 3a | `figures/Figure3/Figure3_A_irea_cytokine_plot.R` |
+| Fig. 3b | `figures/Figure3/figure3b.py` |
+| Fig. 3c | `figures/Figure3/figure3c.R` |
+| Fig. 4b | `figures/Figure2/Figure2_H_hallmark_gsea_mTORC1.R` |
+| Fig. 4c,d,e | `figures/Figure4/Figure4_Final_corrected_nums.R` |
+| Extended Data Fig. 1 | `figures/Supplementary/SFigure1_donor_annotations.R` |
+| Extended Data Fig. 2c,d,e,f | `figures/Supplementary/SFigure2_myeloid_subtypes.R` (batch wrapper: `SFigure2_myeloid_subtypes.lsf`). The same script writes Supplementary Table 6 and both source-data files |
+| Extended Data Fig. 3b | `figures/Figure2/2.Figure2_B_scRDS.ipynb` |
+| Extended Data Fig. 4 | `figures/Figure2/Figure2_G_02_network_degree.R` |
+| Extended Data Fig. 5 | `figures/Figure4/Figure4_Final_corrected_nums.R` |
 
-## Final figures
+Image segmentation, morphological feature extraction and morphotype classification live in the separate repository [koniplus/microglia-zone-morphology](https://github.com/koniplus/microglia-zone-morphology).
 
-| Figure | PDF | PNG | Content |
+---
+
+## Supplementary tables
+
+| # | Contents | Panel | File |
 |---|---|---|---|
-| Figure 1 | [PDF](Figures/Figure1.pdf) | [PNG](Figures/Figure1.png) | Cohort structure and outcome-associated immune programs |
-| Figure 2 | [PDF](Figures/Figure2.pdf) | [PNG](Figures/Figure2.png) | Myeloid states, disease relevance, pathways, and regulatory networks |
-| Figure 3 | [PDF](Figures/Figure3.pdf) | [PNG](Figures/Figure3.png) | Cytokine and cell-cell interaction analyses |
-| Figure 4 | [PDF](Figures/Figure4.pdf) | [PNG](Figures/Figure4.png) | Preclinical treatment validation |
+| 1 | Donor metadata | Extended Data Fig. 1 | `Supplementary_Table_01_donor_metadata_ExtDataFig1.csv` |
+| 2 | CCA metadata | Fig. 1b | `Supplementary_Table_02_CCA_metadata_Fig1b.csv` |
+| 3 | crumblr cell-type composition | Fig. 1d | `Supplementary_Table_03_crumblr_celltype_composition_Fig1d.csv` |
+| 4 | DEGs associated with mRS, all immune cell types | Fig. 1e | `Supplementary_Table_04_DEGs_mRS_all_celltypes_Fig1e.csv` |
+| 5 | Myeloid GSEA, full GO Biological Process | Fig. 1f | `Supplementary_Table_05_myeloid_GSEA_GOBP_Fig1f.csv` |
+| 6 | dreamlet DEGs across myeloid subtypes | Extended Data Fig. 2e | `Supplementary_Table_06_dreamlet_DEGs_myeloid_subtypes_ExtDataFig2e.csv` |
+| 7 | scDRS disease-relevance analysis | Fig. 2b | `Supplementary_Table_07_scDRS_disease_relevance_Fig2b.csv` |
+| 8 | crumblr mRS associations across MTCs | Fig. 2c | `Supplementary_Table_08_crumblr_mRS_MTC_Fig2c.csv` |
+| 9 | DEGs between MTC_456 and MTC_123 | Fig. 2d | `Supplementary_Table_09_DEGs_MTC456_vs_MTC123_Fig2d.csv` |
+| 10 | GSEA, GO Molecular Function | Fig. 2e | `Supplementary_Table_10_GSEA_GOMF_Fig2e.csv` |
+| 11 | Predicted cell-type composition | Fig. 2f | `Supplementary_Table_11_predicted_celltype_composition_Fig2f.csv` |
+| 12 | Fisher TF enrichment analysis | Fig. 2g | `Supplementary_Table_12_fisher_TF_enrichment_Fig2g.csv` |
+| 13 | Gene regulatory network degree ranking | Extended Data Fig. 4 | `Supplementary_Table_13_GRN_degree_ranking_ExtDataFig4.csv` |
+| 14 | IREA results | Fig. 3a | `Supplementary_Table_14_IREA_results_Fig3a.csv` |
+| 15 | LIANA cell–cell interaction results | Fig. 3b | `Supplementary_Table_15_LIANA_interactions_Fig3b.csv` |
+| 16 | CellChat cell–cell interaction results | Fig. 3c | `Supplementary_Table_16_CellChat_interactions_Fig3c.csv` |
+| 17 | Computational drug-repurposing compound results | — | `Supplementary_Table_17_drug_repurposing_compounds.csv` |
+| 18 | Hallmark GSEA results | Fig. 4b | `Supplementary_Table_18_hallmark_GSEA_Fig4b.csv` |
+| 19 | Behavioral analysis | Fig. 4c | `Supplementary_Table_19_behavioral_analysis_Fig4c.csv` |
+| 20 | Morphology analysis | Fig. 4d,e | `Supplementary_Table_20_morphology_analysis_Fig4de.csv` |
 
-Supplementary figures are provided in both formats:
-[SFigure 1](SFigures/SFigure1.pdf),
-[SFigure 2](SFigures/SFigure2.pdf),
-[SFigure 3](SFigures/SFigure3.pdf),
-[SFigure 4](SFigures/SFigure4.pdf), and
-[SFigure 5](SFigures/SFigure5.pdf).
+### Source data
 
-## Result tables
+Not numbered supplementary tables. These are the full outputs behind two Extended Data panels, provided for transparency.
 
-All twenty final result tables are machine-readable CSV files. Filenames are
-preserved exactly as supplied with the final analysis bundle.
-
-| Table | Associated panel | Contents |
+| Contents | Panel | File |
 |---|---|---|
-| [Table 1](Tables/Table1_SFig1_donor_metadata.csv) | Supplementary Figure 1 | Donor metadata |
-| [Table 2](Tables/Table2_Figure1B_CCA_metadata.csv) | Figure 1B | CCA metadata correlation matrix |
-| [Table 3](Tables/Table3_Figure1D_res_meta_mRS.csv) | Figure 1D | Meta-analysis of mRS effects by cell population |
-| [Table 4](Tables/Table4_Fiigure1E_DEGs_all_assays.csv) | Figure 1E | Differential-expression results across assays |
-| [Table 5](Tables/Table5_FIgure1F_myeloid_GSEA_full_GOBP.csv) | Figure 1F | Full myeloid GO Biological Process GSEA |
-| [Table 6](Tables/Table6_SFig2E_Dreamlet_DEG_Subtypes.csv) | Supplementary Figure 2E | Dreamlet differential-expression results by subtype |
-| [Table 7](Tables/Table7_Figure2B_scDRS_Table.csv) | Figure 2B | scDRS association results |
-| [Table 8](Tables/Table8_Figure2C_CrumblR_mRS.csv) | Figure 2C | crumblr mRS association results |
-| [Table 9](Tables/Table9_Figure2D_DEGs_MTC456_vs_MTC123.csv) | Figure 2D | MTC_456 versus MTC_123 differential expression |
-| [Table 10](Tables/Table10_Figure2E_GSEA_GOMF.csv) | Figure 2E | GO Molecular Function GSEA |
-| [Table 11](Tables/Table11_Figure2F_predicted_celltype_composition.csv) | Figure 2F | Predicted cell-type composition by MTC |
-| [Table 12](Tables/Table12_Figure2G_TF.csv) | Figure 2G | Transcription-factor and regulon statistics |
-| [Table 13](Tables/Table13_G_network_degree_ranking.csv) | Figure 2G | Regulatory-network degree ranking |
-| [Table 14](Tables/Table14_FIgure3A_IREA_Results.csv) | Figure 3A | IREA cytokine results |
-| [Table 15](Tables/Table15_Figure3B_CCI_LIANA.csv) | Figure 3B | LIANA cell-cell interaction results |
-| [Table 16](Tables/Table16_Figure3C_CCI_CellChat.csv) | Figure 3C | CellChat cell-cell interaction results |
-| [Table 17](Tables/Table17_CDR_compounds.csv) | Drug repurposing | Compound and mechanism-of-action ranking |
-| [Table 18](Tables/Table18_Figure4B_GSEA_Hallmark_full.csv) | Figure 4B | Full Hallmark GSEA |
-| [Table 19](Tables/Table19_Figure4_behaviour_FULL.csv) | Figure 4 | Full behavioral model statistics |
-| [Table 20](Tables/Table20_Figure4DE_morphology_FULL.csv) | Figure 4D–E | Full morphology model statistics |
+| crumblr myeloid-subtype composition: effect size, nominal p, and Benjamini–Hochberg FDR across the 13 subtypes | Extended Data Fig. 2d | `source_data/ExtDataFig2d_crumblr_subtype_composition.csv` |
+| GO Molecular Function over-representation, complete results per subtype and direction | Extended Data Fig. 2f | `source_data/ExtDataFig2f_GOMF_enrichment.csv` |
 
-## MTC groupings
+---
 
-| Group | Clusters | Outcome association |
-|---|---|---|
-| MTC_123 | MTC_1, MTC_2, MTC_3 | Favorable outcome (mRS 0–3) |
-| MTC_456 | MTC_4, MTC_5, MTC_6 | Unfavorable outcome (mRS 4–6) |
-| MTC_Prolif | MTC_7 | Proliferating myeloid cells |
+## Software
 
-## Reproducibility notes
+Analyses ran in R and Python. Core packages, with the versions used:
 
-The deposited scripts preserve the final analysis performed in the authors'
-computing environment. Primary pipeline scripts accept command-line arguments.
-Before running individual figure scripts, set `ICH_PROJECT_DIR` to the local
-project-data directory, `ICH_GMT_DIR` to the local MSigDB GMT directory, and
-`ICH_FONT_DIR` to the directory containing the Nimbus Sans font files. The LSF
-pySCENIC script additionally contains neutral placeholders for the cluster
-project account, queue, and notification email. Large intermediate Seurat,
-AnnData, loom, and gene-set files are not stored in GitHub.
+**R** — Seurat, hdWGCNA v0.2.19, crumblr v0.99.6, dreamlet, variancePartition v1.31.9, muscat, Harmony v0.1.1, igraph, ggraph, clusterProfiler v4.8.3, org.Hs.eg.db v3.18.0, GO.db v3.18.0, metafor, lme4, emmeans
 
-Key R dependencies include Seurat, dreamlet, variancePartition, crumblr,
-hdWGCNA, harmony, lme4, lmerTest, emmeans, clusterProfiler, SCopeLoomR,
-ComplexHeatmap, igraph, ggraph, patchwork, and tidyverse. Key Python dependencies
-include pegasuspy, scanpy, scvi-tools, scDRS, LIANA, anndata, pandas, NumPy,
-SciPy, matplotlib, seaborn, scrublet, and loompy. The pySCENIC workflow is
-configured for an LSF high-performance computing environment.
+**Python** — Pegasus v1.7.0, scanpy v1.9.6, scDRS v1.0.3, pySCENIC v0.12.1, arboreto v0.1.6, LIANA v0.1.12, Cellpose v3.1.1, scikit-image, skan
 
-## Manuscript authors
+`environment.yml` at the repository root recreates the conda environment used for the R analyses:
 
-| Author | Affiliations | Contribution note |
-|---|---|---|
-| Dimitrios Kyriakis | 1, 2, 3, 4, 5 | — |
-| Angelos Pavlopoulos† | 6 | Equal contribution |
-| Xinyi Wang† | 1, 3, 4, 5 | Equal contribution |
-| James Vicari | 1, 3, 4, 5 | — |
-| Rukmani Pandey | 7 | Cryosectioning of mouse brain samples |
-| Joon Ho Seo | — | Mouse experimental setup design |
-| Steve P. Kleopoulos | 1, 3, 4, 5 | — |
-| Stathis Argyriou | 1, 3, 4, 5 | — |
-| Zhiping Shao | 1, 3, 4, 5 | — |
-| Gabriel Hoffman | 1, 3, 4, 5 | — |
-| John F. Fullard | 1, 3, 4, 5 | — |
-| Anastasios Georgakopoulos | — | — |
-| Georgios Voloudakis | 1, 3, 4, 5 | — |
-| Alex Skupin | 2 | — |
-| Donghoon Lee | 1, 3, 4, 5 | — |
-| Christopher P. Kellner | — | — |
-| Panos Roussos | 1, 3, 4, 5, 8 | Corresponding author |
+```bash
+conda env create -f environment.yml -n ICH_STROKE_Env
+```
 
-† These authors contributed equally to this work.
+Each script prints `sessionInfo()` on exit; the version block is written to the run log.
 
-1. Friedman Brain Institute, Icahn School of Medicine at Mount Sinai, New York,
-   NY, USA
-2. Luxembourg Center for Systems Biomedicine (LCSB), University of Luxembourg,
-   Esch-sur-Alzette, Luxembourg
-3. Center for Disease Neurogenomics, Icahn School of Medicine at Mount Sinai,
-   New York, NY, USA
-4. Department of Psychiatry, Icahn School of Medicine at Mount Sinai, New York,
-   NY, USA
-5. Department of Genetics and Genomic Sciences, Icahn School of Medicine at
-   Mount Sinai, New York, NY, USA
-6. Department of Pharmacology, Medical School of Athens, National and
-   Kapodistrian University of Athens, Athens, Greece
-7. Institute for Translational Medicine and Pharmacology, Icahn School of
-   Medicine at Mount Sinai, New York, NY 10029, USA
-8. Mental Illness Research, Education and Clinical Centers, James J. Peters VA
-   Medical Center, Bronx, New York, USA
+---
+
+## Data availability
+
+The single-cell dataset, clinical metadata and analysis outputs are available through
+<https://cellxgene.cziscience.com/collections/d3c3e028-f91c-481e-9560-922fe94da67b>
+
+See [`data/README.md`](data/README.md) for what is hosted where.
+
+## Ethics approval
+
+The human component of this study was approved by the Institutional Review Board of the Icahn School of Medicine at Mount Sinai (protocol number STUDY-18-01012A). Written informed consent was obtained from participants or their legally authorized representatives. All animal experiments were conducted according to institutional guidelines and were approved by the Institutional Animal Care and Use Committee of the Icahn School of Medicine at Mount Sinai (IACUC-2014-0271).
+
+## Code availability
+
+- Single-cell analysis: [DiseaseNeuroGenomics/scMyeloids_ICH](https://github.com/DiseaseNeuroGenomics/scMyeloids_ICH)
+- Image-analysis pipeline: [koniplus/microglia-zone-morphology](https://github.com/koniplus/microglia-zone-morphology)
+- Computational drug repurposing: [voloudakislab/antagonist](https://github.com/voloudakislab/antagonist), antagonist v1.0.0
+
+## Competing interests
+
+The authors declare no competing interests.
+
+## Funding
+
+This work was supported by the following: U.S. National Institutes of Health (NIH) NIA grants 2R56AG008200 (Nikolaos K. Robakis), 2R01AG008200 (Nikolaos K. Robakis), and 2R01NS047229 (Anastasios Georgakopoulos and Nikolaos K. Robakis); and the AP Slaner Family Award to Nikolaos K. Robakis. Additionally, this study was supported by the NIH, Bethesda, MD under award numbers R01AG067025, R01AG082185, R01AG065582, R01MH125246, R01AG050986, R01AG095776, U24AG087563, RF1NS147363, and U19AG097398. This work was supported in part through the computational and data resources and staff expertise provided by Scientific Computing and Data at the Icahn School of Medicine at Mount Sinai and supported by the Clinical and Translational Science Award (CTSA) grant UL1TR004419 from the National Center for Advancing Translational Sciences.
+
+## Author contributions
+
+DK, AS, DL, CK and PR conceived and designed the study. CK performed the endoscopic hematoma-evacuation surgeries and provided the brain biopsy specimens together with the clinical, radiographic and six-month outcome data. SK, SA, ZS and JF performed the tissue dissociation, FACS enrichment and single-cell RNA-sequencing library preparation. DK, AS, DL and PR designed the single-cell analysis strategy. DK performed the single-cell analysis, including quality control and preprocessing, cell-type and myeloid-subtype annotation, compositional and differential-expression analyses, metacell construction and clustering, gene-regulatory-network inference, disease-relevance scoring, cytokine-response and cell–cell communication analyses, and all data visualization. GV performed the computational drug repurposing. AP, JV and AG performed the mouse ICH experiments. AP and AG performed the behavioral assessments. JS contributed to the design of the mouse experimental setup. RP prepared the mouse brain samples for immunostaining. XW and SM performed the immunofluorescence staining and image acquisition. XW performed the image segmentation, morphological feature extraction and unsupervised morphotype classification. DK and GH performed the compositional and statistical analysis of the morphotype and behavioral data. DK, AP, DL and PR wrote the manuscript. DL and PR supervised the study. All authors contributed to the article and approved the submitted version.
+
+## Citation
+
+Kyriakis D, Pavlopoulos A, Wang X, et al. Single-cell profiling of living human brain identifies myeloid states associated with six-month functional outcome after intracerebral hemorrhage. *Submitted*, 2026.
 
 ## License
 
-The code is released under the MIT License. Data-release and DOI information
-will be added when the associated deposits are published.
+Code is released under the MIT License, see [LICENSE](LICENSE). Figures, supplementary tables and derived data accompany the manuscript and are subject to the publisher's terms.
