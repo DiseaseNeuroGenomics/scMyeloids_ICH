@@ -33,8 +33,8 @@ Panos Roussos <sup>1,2,3,4,9</sup>
 <sup>†</sup> These authors contributed equally to this work.
 
 **Corresponding authors**
-Panos Roussos, <panagiotis.roussos@mssm.edu>
-Dimitrios Kyriakis, <dimitrios.kyriakis@mssm.edu>
+1. Panos Roussos, <panagiotis.roussos@mssm.edu>
+2. Dimitrios Kyriakis, <dimitrios.kyriakis@mssm.edu>
 
 ### Affiliations
 
@@ -208,7 +208,7 @@ DK, AS, DL, CK and PR conceived and designed the study. CK performed the endosco
 
 ## Citation
 
-Kyriakis D, Pavlopoulos A, Wang X, et al. Single-cell profiling of living human brain identifies myeloid states associated with six-month functional outcome after intracerebral hemorrhage. *Submitted*, 2026.
+Kyriakis D et al. Single-cell profiling of living human brain identifies myeloid states associated with six-month functional outcome after intracerebral hemorrhage. *Submitted*, 2026.
 
 ## License
 

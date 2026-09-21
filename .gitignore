@@ -9,3 +9,5 @@ Paper_Figures/*/*.pdf
 scripts/Experiment_Analysis
 NotPublic
 Illustrator
+*.xml
+.idea
