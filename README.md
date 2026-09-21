@@ -69,7 +69,6 @@ Intracerebral hemorrhage (ICH) causes high mortality and disability, but the hum
 │   └── figures/
 │       ├── Figure1/  Figure2/  Figure3/  Figure4/
 │       ├── Supplementary/         Extended Data figures
-│       └── qc/                    cross-check scripts
 ├── figures/                       final panels, PNG and PDF
 │   ├── Figure_1..4
 │   └── extended_data/Extended_Data_Figure_1..5
@@ -109,12 +108,12 @@ Run from `code/`. Scripts source `00_setup.R`, which defines `DERIVED_DIR`, `TAB
 | Fig. 2f | `figures/Figure2/Figure2_F_SAMC_composition_bar.R`      |
 | Fig. 2g | `figures/Figure2/Figure2_G_FINAL_dotplot.R`             |
 | Fig. 3a | `figures/Figure3/Figure3_A_irea_cytokine_plot.R`        |
-| Fig. 3b | `figures/Figure3/figure3b.py`                           |
-| Fig. 3c | `figures/Figure3/figure3c.R`                            |
+| Fig. 3b | `figures/Figure3/Figure3_B.py`                         |
+| Fig. 3c | `figures/Figure3/Figure3_C.R`                           |
 | Fig. 4b | `figures/Figure2/Figure2_H_hallmark_gsea_mTORC1.R`      |
 | Fig. 4c,d,e | `figures/Figure4/Figure4_Final_corrected_nums.R`        |
 | Extended Data Fig. 1 | `figures/Supplementary/SFigure1_donor_annotations.R`    |
-| Extended Data Fig. 2c,d,e,f | `figures/Supplementary/SFigure2.R`     |
+| Extended Data Fig. 2c,d,e,f | `figures/Supplementary/SFigure2.R`                      |
 | Extended Data Fig. 3b | `figures/Figure2/2.Figure2_B_scRDS.ipynb`               |
 | Extended Data Fig. 4 | `figures/Figure2/Figure2_G_02_network_degree.R`         |
 | Extended Data Fig. 5 | `figures/Figure4/Figure4_Final_corrected_nums.R`        |
