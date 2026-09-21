@@ -41,10 +41,10 @@ set.seed(12345)
 options(future.globals.maxSize = 100000000 * 1024^2)
 
 # ================================================================== CONFIG ==
-OBJ_PATH <- "/sc/arion/projects/CommonMind/kyriad02/Lab_Projects/ICH_Stroke/result/Cortex/5.FreshMG_Mapping/Myeloid_Pred_ADAM.rds.zstd"
-UTILS    <- "/sc/arion/work/kyriad02/ICH_project/workflow/scripts/utils.R"
+OBJ_PATH <- "Myeloid_Pred_ADAM.rds.zstd"
+UTILS    <- "workflow/scripts/utils.R"
 
-OUT_ROOT  <- "SFigure2_FINAL"
+OUT_ROOT  <- "SFigure2"
 N_THREADS <- 20
 CONTRAST  <- c(Diff_B_vs_G = "mRS_binnedB-mRS_binnedG")
 
