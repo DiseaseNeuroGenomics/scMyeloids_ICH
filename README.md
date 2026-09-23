@@ -10,44 +10,47 @@ Analysis code, figures and supplementary tables.
 
 ## Authors
 
-Dimitrios Kyriakis <sup>1,2,3,4,5 †</sup>,
-Angelos Pavlopoulos <sup>6 †</sup>,
-Xinyi Wang <sup>1,2,3,4 †</sup>,
-Sarah Murphy <sup>1,2,3,4</sup>,
-James M. Vicari <sup>1,2,3,4</sup>,
-Rukmani Pandey <sup>7</sup>,
-Gabriel E. Hoffman <sup>1,2,3,4,9</sup>,
-Steve P. Kleopoulos <sup>1,2,3,4</sup>,
-Stathis Argyriou <sup>1,2,3,4</sup>,
-Zhiping Shao <sup>1,2,3,4</sup>,
-Joon Ho Seo <sup>2,3</sup>,
-Alexander Skupin <sup>5</sup>,
-Nikolaos K. Robakis <sup>3,8</sup>,
-Georgios Voloudakis <sup>1,2,3,4</sup>,
-Anastasios Georgakopoulos <sup>3</sup>,
-John F. Fullard <sup>1,2,3,4</sup>,
-Donghoon Lee <sup>1,2,3,4</sup>,
-Christopher P. Kellner,
-Panos Roussos <sup>1,2,3,4,9</sup>
+Dimitrios Kyriakis<sup>1,2,3,4,5,†</sup>, 
+Angelos Pavlopoulos<sup>6,†</sup>, 
+Xinyi Wang<sup>1,2,3,4,†</sup>, 
+Sarah Murphy<sup>1,2,3,4</sup>, 
+James M. Vicari<sup>1,2,3,4</sup>, 
+Rukmani Pandey<sup>7</sup>, 
+Gabriel E. Hoffman<sup>1,2,3,4,8,9</sup>, 
+Steve P. Kleopoulos<sup>1,2,3,4</sup>, 
+Stathis Argyriou<sup>1,2,3,4</sup>, 
+Zhiping Shao<sup>1,2,3,4</sup>, 
+Joon Ho Seo<sup>1,3</sup>, 
+Alexander Skupin<sup>5,10,11</sup>, 
+Nikolaos K. Robakis<sup>3,12</sup>, 
+Georgios Voloudakis<sup>1,2,3,4,8,9,13</sup>, 
+Anastasios Georgakopoulos<sup>3</sup>, 
+John F. Fullard<sup>1,2,3,4</sup>, 
+Donghoon Lee<sup>1,2,3,4</sup>, 
+Christopher P. Kellner<sup>14</sup>, 
+Panos Roussos<sup>1,2,3,4,8,9</sup>
 
 <sup>†</sup> These authors contributed equally to this work.
 
-**Corresponding authors**
-1. Panos Roussos, <panagiotis.roussos@mssm.edu>
-2. Dimitrios Kyriakis, <dimitrios.kyriakis@mssm.edu>
+**Corresponding authors:**  
+Panos Roussos (<panagiotis.roussos@mssm.edu>), Dimitrios Kyriakis (<dimitrios.kyriakis@mssm.edu>)
 
 ### Affiliations
 
-1. Friedman Brain Institute, Icahn School of Medicine at Mount Sinai, New York, NY, USA
-2. Center for Disease Neurogenomics, Icahn School of Medicine at Mount Sinai, New York, NY, USA
-3. Department of Psychiatry, Icahn School of Medicine at Mount Sinai
-4. Department of Genetics and Genomic Sciences
+1. Center for Disease Neurogenomics, Icahn School of Medicine at Mount Sinai, New York, NY, USA
+2. Friedman Brain Institute, Icahn School of Medicine at Mount Sinai, New York, NY, USA
+3. Department of Psychiatry, Icahn School of Medicine at Mount Sinai, New York, NY, USA
+4. Department of Genetics and Genomic Sciences, Icahn School of Medicine at Mount Sinai, New York, NY, USA
 5. Luxembourg Center for Systems Biomedicine (LCSB), University of Luxembourg, Esch-sur-Alzette, Luxembourg
 6. Department of Pharmacology, Medical School of Athens, National and Kapodistrian University of Athens, Athens, Greece
 7. Institute for Translational Medicine and Pharmacology, Icahn School of Medicine at Mount Sinai, New York, NY 10029, USA
-8. Department of Neuroscience, Icahn School of Medicine at Mount Sinai
-9. Mental Illness Research, Education and Clinical Centers, James J. Peters VA Medical Center, Bronx, New York
-
+8. Mental Illness Research, Education and Clinical Centers, James J. Peters VA Medical Center, Bronx, New York, USA
+9. Center for Precision Medicine and Translational Therapeutics, James J. Peters VA Medical Center, Bronx, New York, USA
+10. Department of Physics, University of Luxembourg, 7 Avenue de la Faïencerie, Luxembourg, Luxembourg
+11. Department of Neurosciences, University of California San Diego, La Jolla, California, USA
+12. Department of Neuroscience, Icahn School of Medicine at Mount Sinai, New York, NY, USA
+13. Department of Artificial Intelligence and Human Health, Icahn School of Medicine at Mount Sinai, New York, NY, USA
+14. Department of Neurosurgery, Icahn School of Medicine at Mount Sinai, New York, NY, USA
 ---
 
 ## Abstract
